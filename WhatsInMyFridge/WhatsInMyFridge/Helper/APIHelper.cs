@@ -16,7 +16,7 @@ namespace WhatsInMyFridge.Helper
         {
             try
             {
-                string url = "https://world.openfoodfacts.org/api/v0/product/BARCODE.json".Replace("BARCODE", Code);
+                string url = $"https://world.openfoodfacts.org/api/v0/product/{Code}.json";
 
                 string json;
 
@@ -31,22 +31,35 @@ namespace WhatsInMyFridge.Helper
 
                 JObject obj = JObject.Parse(json);
 
-                JToken ingredients = obj["ingredients_text_debug"];
-                JToken nutri_grade = obj["nutriscore_grade"];
-                JToken front_image = obj["image_front_url"];
-                JToken brand = obj["brands"];
-                JToken name = obj["product_name"];
+                JToken products = obj["product"];
+
+                JToken ingredients = products["ingredients_text"];
+                JToken nutri_grade = products["nutriscore_grade"];
+                JToken front_image = products["image_front_url"];
+                JToken brand = products["brands"];
+                JToken name = products["product_name"];
+
+                string igm = front_image.ToString();
+                Uri uri = new Uri(front_image.ToString());
+
+                try
+                {
+                    ImageSource source = ImageSource.FromUri(uri);
+                }catch(Exception ex)
+                {
+
+                }
 
                 return new Food()
                 {
-                    main_img = ImageSource.FromUri(new Uri(front_image.ToString())),
+                    main_img_url = front_image.ToString(),
                     ingredients_string = ingredients.ToString(),
                     Name = name.ToString(),
                     brand = brand.ToString(),
-                    nutrition_img_source = ImageSource.FromUri(new Uri(nutri_grade.ToString()))
+                    nutrition_img_url = $"https://static.openfoodfacts.org/images/misc/nutriscore-{nutri_grade.ToString()}.png"
                 };
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }

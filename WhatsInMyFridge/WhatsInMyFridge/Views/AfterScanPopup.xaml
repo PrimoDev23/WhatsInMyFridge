@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="WhatsInMyFridge.Views.AfterScanPopup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:WhatsInMyFridge.Behaviors">
+    <Grid BackgroundColor="{StaticResource colorBlurBack}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Frame
+            Grid.Row="1"
+            Grid.Column="1"
+            CornerRadius="20"
+            HasShadow="True">
+            <StackLayout Orientation="Vertical">
+                <Entry
+                    x:Name="txtAmount"
+                    Keyboard="Numeric"
+                    Placeholder="Anzahl"
+                    TextChanged="txtAmount_TextChanged" />
+                <Label
+                    x:Name="AmountValid"
+                    IsVisible="False"
+                    Text="Die eingegebene Anzahl ist ungültig!"
+                    TextColor="Red" />
+                <Label Text="Mindesthaltbarkeitsdatum" />
+                <Entry
+                    x:Name="txtDate"
+                    Keyboard="Numeric"
+                    Unfocused="txtDate_Unfocused">
+                    <Entry.Behaviors>
+                        <behaviors:MaskedBehavior Mask="XX.XX.XXXX" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label
+                    x:Name="DateValid"
+                    IsVisible="False"
+                    Text="Das eingegebene Datum ist üngültig!"
+                    TextColor="Red" />
+                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                    <Button
+                        x:Name="btnCancel"
+                        Clicked="btnCancel_Clicked"
+                        HorizontalOptions="End"
+                        Text="Abbrechen" />
+                    <Button
+                        x:Name="btnOK"
+                        Clicked="btnOK_Clicked"
+                        HorizontalOptions="End"
+                        Text="OK" />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentView>

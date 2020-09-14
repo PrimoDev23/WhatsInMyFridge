@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhatsInMyFridge.Controls;
+using WhatsInMyFridge.Helper;
 using WhatsInMyFridge.Models;
 using WhatsInMyFridge.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZXing;
+using ZXing.Mobile;
 
 namespace WhatsInMyFridge.Views
 {
@@ -21,25 +24,16 @@ namespace WhatsInMyFridge.Views
         {
             InitializeComponent();
 
+            void read()
+            { 
+                viewModel.foodList = SaveHandler.readFood();
+                viewModel.FilteredFoodList = new ObservableCollection<Food>(viewModel.foodList);
+            }
+
+            Task.Run(new Action(read));
+
+
             BindingContext = viewModel;
-
-            viewModel.foodList.Add(new Food()
-            {
-                Amount = 2,
-                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(10)), new BestBeforeDate(DateTime.Now.AddDays(-1)) },
-                Name = "Milch",
-                main_img = new UriImageSource() { Uri = new Uri("https://frogcoffee.de/media/image/83/ab/c2/x1034352938avFptQAoOWw0Bi_600x600.png.pagespeed.ic.dBXAjKUA1N.png") },
-            });
-
-            viewModel.foodList.Add(new Food()
-            {
-                Amount = 1,
-                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5)) },
-                Name = "Tomate",
-                main_img = new UriImageSource() { Uri = new Uri("https://www.boeschbodenspies.com/wp-content/uploads/2017/08/tomato.png") },
-            });
-
-            viewModel.FilteredFoodList = new ObservableCollection<Food>(viewModel.foodList);
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -47,6 +41,80 @@ namespace WhatsInMyFridge.Views
             if (sender is FridgeGrid grid)
             {
                 Navigation.PushAsync(new FoodDetailPage(grid.FoodItem));
+            }
+        }
+
+        public void Scan_Clicked(object o)
+        {
+
+        }
+
+        public void Insert_Clicked(object o)
+        {
+
+        }
+
+        private async void fab_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string res = await DisplayActionSheet(null, "Abbrechen", null, "Scannen", "Manuell eingeben");
+
+                switch (res)
+                {
+                    case "Scannen":
+                        MobileBarcodeScanner scanner = new MobileBarcodeScanner();
+
+                        Result scan_res = await scanner.Scan();
+
+                        bool found = true;
+                        Food food = viewModel.foodList.foodAlreadyAdded(scan_res.Text);
+
+                        if (food == null)
+                        {
+                            found = false;
+                            food = await APIHelper.getFoodFromCode(scan_res.Text);
+                        }
+
+                        if (food == null)
+                        {
+                            await DisplayAlert(null, "Keinen passenden Artikel gefunden", "OK");
+                            return;
+                        }
+
+                        afterScanPopup.IsVisible = true;
+
+                        ValueTuple<double, DateTime> tuple = await afterScanPopup.waitForFinish();
+
+                        if (tuple.Item1 == 0 || tuple.Item2 == DateTime.MinValue)
+                        {
+                            return;
+                        }
+
+                        double amount = tuple.Item1;
+                        DateTime dt = tuple.Item2;
+
+                        food.Amount += amount;
+
+                        for (int i = 0; i < amount; i++)
+                        {
+                            food.bestBeforeDate.Add(new BestBeforeDate(dt));
+                        }
+
+                        if (!found)
+                        {
+                            viewModel.foodList.Add(food);
+                        }
+
+                        break;
+                    case "Manuell eingeben":
+                        break;
+                }
+                SaveHandler.saveFood(viewModel.foodList);
+            }
+            finally
+            {
+                afterScanPopup.IsVisible = false;
             }
         }
     }

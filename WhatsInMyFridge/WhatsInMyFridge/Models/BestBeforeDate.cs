@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 using Xamarin.Forms;
 
 namespace WhatsInMyFridge.Models
 {
     public class BestBeforeDate
     {
+        [XmlIgnore]
         public Color dateOver
         {
             get
@@ -21,8 +23,10 @@ namespace WhatsInMyFridge.Models
                 }
             }
         }
+
         public DateTime bestBeforeDate { get; set; }
 
+        [XmlIgnore]
         public string formattedDate
         {
             get { return bestBeforeDate.ToString("d"); }
@@ -31,6 +35,11 @@ namespace WhatsInMyFridge.Models
         public BestBeforeDate(DateTime dt)
         {
             bestBeforeDate = dt;
+        }
+
+        public BestBeforeDate()
+        {
+
         }
     }
 }
