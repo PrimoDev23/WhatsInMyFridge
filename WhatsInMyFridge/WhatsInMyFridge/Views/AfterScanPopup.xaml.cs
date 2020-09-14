@@ -46,7 +46,7 @@ namespace WhatsInMyFridge.Views
                 }
             }
 
-            complete?.TrySetResult((Double.Parse(txtAmount.Text), DateTime.Parse(txtDate.Text)));
+            complete?.TrySetResult((Double.Parse(txtAmount.Text), string.IsNullOrEmpty(txtDate.Text) ? DateTime.MinValue :  DateTime.Parse(txtDate.Text)));
         }
 
         private void txtAmount_TextChanged(object sender, TextChangedEventArgs e)
