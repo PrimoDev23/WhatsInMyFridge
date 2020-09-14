@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WhatsInMyFridge.Views.FridgePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:WhatsInMyFridge.Controls"
+    xmlns:models="clr-namespace:WhatsInMyFridge.Models"
+    xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    x:DataType="vm:FridgeViewModel">
+    <CollectionView
+        x:DataType="vm:FridgeViewModel"
+        ItemSizingStrategy="MeasureAllItems"
+        ItemsLayout="VerticalGrid, 2"
+        ItemsSource="{Binding foodList}"
+        SelectionMode="None">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Source="{Binding image}" />
+                    <Label
+                        Grid.Row="1"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding combinedAmountName}" />
+                    <controls:FridgeGrid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </controls:FridgeGrid.GestureRecognizers>
+                </controls:FridgeGrid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>
