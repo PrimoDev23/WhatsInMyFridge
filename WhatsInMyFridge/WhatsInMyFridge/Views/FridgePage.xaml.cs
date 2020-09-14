@@ -18,20 +18,19 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FridgePage : ContentPage
     {
-        FridgeViewModel viewModel = new FridgeViewModel();
+        private readonly FridgeViewModel viewModel = new FridgeViewModel();
 
         public FridgePage()
         {
             InitializeComponent();
 
             void read()
-            { 
+            {
                 viewModel.foodList = SaveHandler.readFood();
                 viewModel.FilteredFoodList = new ObservableCollection<Food>(viewModel.foodList);
             }
 
             Task.Run(new Action(read));
-
 
             BindingContext = viewModel;
         }
@@ -44,16 +43,7 @@ namespace WhatsInMyFridge.Views
             }
         }
 
-        public void Scan_Clicked(object o)
-        {
-
-        }
-
-        public void Insert_Clicked(object o)
-        {
-
-        }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         private async void fab_Clicked(object sender, EventArgs e)
         {
             try
@@ -66,6 +56,12 @@ namespace WhatsInMyFridge.Views
                         MobileBarcodeScanner scanner = new MobileBarcodeScanner();
 
                         Result scan_res = await scanner.Scan();
+
+                        if (scan_res == null)
+                        {
+                            await DisplayAlert(null, "Fehler beim Auswerten der Daten!", "OK");
+                            return;
+                        }
 
                         bool found = true;
                         Food food = viewModel.foodList.foodAlreadyAdded(scan_res.Text);
@@ -110,11 +106,33 @@ namespace WhatsInMyFridge.Views
                     case "Manuell eingeben":
                         break;
                 }
+
+                txtSearch_TextChanged(null, null);
                 SaveHandler.saveFood(viewModel.foodList);
             }
             finally
             {
                 afterScanPopup.IsVisible = false;
+            }
+        }
+
+        private async void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!(txtSearch.Text?.Length > 0))
+            {
+                void run()
+                {
+                    viewModel.FilteredFoodList = new ObservableCollection<Food>(viewModel.foodList);
+                }
+                await Task.Run(new Action(run)).ConfigureAwait(false);
+            }
+            else
+            {
+                void run()
+                {
+                    viewModel.FilteredFoodList = new ObservableCollection<Food>(viewModel.foodList.getFoodsByName(txtSearch.Text));
+                }
+                await Task.Run(new Action(run)).ConfigureAwait(false);
             }
         }
     }

@@ -39,7 +39,6 @@ namespace WhatsInMyFridge.Models
 
         public BestBeforeDate()
         {
-
         }
     }
 }

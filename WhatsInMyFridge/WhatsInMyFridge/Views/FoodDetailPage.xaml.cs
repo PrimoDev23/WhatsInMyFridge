@@ -13,7 +13,7 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FoodDetailPage : ContentPage
     {
-        FoodDetailViewModel viewModel = new FoodDetailViewModel();
+        private readonly FoodDetailViewModel viewModel = new FoodDetailViewModel();
 
         public FoodDetailPage(Food food)
         {

@@ -26,8 +26,8 @@ namespace WhatsInMyFridge.ViewModels
                 _foodList = value;
                 OnPropertyChanged();
             }
-        } 
-        
+        }
+
         private ObservableCollection<Food> filteredFoodList { get; set; } = new ObservableCollection<Food>();
         public ObservableCollection<Food> FilteredFoodList
         {
@@ -40,26 +40,6 @@ namespace WhatsInMyFridge.ViewModels
                 filteredFoodList = value;
                 OnPropertyChanged();
             }
-        }
-
-        private string searchText { get; set; }
-
-        public string SearchText
-        { 
-            get { return searchText; } 
-            set 
-            { 
-                searchText = value;
-                if (string.IsNullOrEmpty(value))
-                {
-                    FilteredFoodList = new ObservableCollection<Food>(foodList);
-                }
-                else
-                {
-                    FilteredFoodList = new ObservableCollection<Food>(foodList.Where(y => y.Name.Contains(searchText)).ToList());
-                }
-
-            } 
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

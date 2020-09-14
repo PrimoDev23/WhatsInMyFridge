@@ -39,27 +39,17 @@ namespace WhatsInMyFridge.Helper
                 JToken brand = products["brands"];
                 JToken name = products["product_name"];
 
-                string igm = front_image.ToString();
-                Uri uri = new Uri(front_image.ToString());
-
-                try
-                {
-                    ImageSource source = ImageSource.FromUri(uri);
-                }catch(Exception ex)
-                {
-
-                }
-
                 return new Food()
                 {
-                    main_img_url = front_image.ToString(),
-                    ingredients_string = ingredients.ToString(),
-                    Name = name.ToString(),
-                    brand = brand.ToString(),
-                    nutrition_img_url = $"https://static.openfoodfacts.org/images/misc/nutriscore-{nutri_grade.ToString()}.png"
+                    main_img_url = front_image != null ? front_image.ToString() : "",
+                    ingredients_string = ingredients != null ? ingredients.ToString() : "",
+                    Name = name != null ? name.ToString() : "",
+                    brand = brand != null ? brand.ToString() : "",
+                    nutrition_img_url = nutri_grade != null ? $"https://static.openfoodfacts.org/images/misc/nutriscore-{nutri_grade.ToString()}.png" : "",
+                    BarCode = Code
                 };
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
