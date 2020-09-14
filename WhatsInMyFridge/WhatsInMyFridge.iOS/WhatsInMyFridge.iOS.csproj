@@ -175,4 +175,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\kalories.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\restaurant_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kitchen_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\settings_48dp.png" />
+  </ItemGroup>
 </Project>

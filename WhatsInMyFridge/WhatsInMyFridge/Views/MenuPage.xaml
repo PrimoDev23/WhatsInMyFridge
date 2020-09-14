@@ -8,17 +8,17 @@
     android:TabbedPage.IsSmoothScrollEnabled="False"
     android:TabbedPage.ToolbarPlacement="Bottom"
     Visual="Material">
-    <NavigationPage Title="Kühlschrank" IconImageSource="kitchen_18dp.png">
+    <NavigationPage Title="Kühlschrank" IconImageSource="kitchen_48dp.png">
         <x:Arguments>
             <views:FridgePage />
         </x:Arguments>
     </NavigationPage>
 
-    <NavigationPage Title="Rezepte" IconImageSource="restaurant_18dp.png">
+    <NavigationPage Title="Rezepte" IconImageSource="restaurant_48dp.png">
         <x:Arguments>
             <views:RecipeOverview />
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Einstellungen" IconImageSource="settings_18dp.png" />
+    <NavigationPage Title="Einstellungen" IconImageSource="settings_48dp.png" />
 
 </TabbedPage>

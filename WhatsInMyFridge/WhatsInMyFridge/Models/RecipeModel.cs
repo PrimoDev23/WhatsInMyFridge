@@ -19,12 +19,12 @@ namespace WhatsInMyFridge.Models
 
         public string CookingTimePlaceholder
         {
-            get { return $"{CookingTime} min";  }
+            get { return $"{CookingTime}\nmin";  }
         }
 
         public string KilocaloriesPlaceholder
         {
-            get { return $"{Kilocalories} kcal";  }
+            get { return $"{Kilocalories}\nkcal";  }
         }
 
 
