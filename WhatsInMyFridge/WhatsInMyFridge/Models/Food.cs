@@ -11,8 +11,8 @@ namespace WhatsInMyFridge.Models
 {
     public class Food : INotifyPropertyChanged
     {
-        private int _Amount = 0;
-        public int Amount
+        private double _Amount = 0;
+        public double Amount
         {
             get { return _Amount; }
             set { _Amount = value; OnPropertyChanged(null); }
@@ -26,7 +26,24 @@ namespace WhatsInMyFridge.Models
         public string Name { get; set; }
         public string ingredients_string { get; set; }
         public string brand { get; set; }
+        public string BarCode { get; set; }
+
+        private string _main_img_url;
+        public string main_img_url
+        {
+            get { return _main_img_url; }
+            set { _main_img_url = value; main_img = ImageSource.FromUri(new Uri(value)); }
+        }
+        [XmlIgnore]
         public ImageSource main_img { get; set; }
+
+        private string _nutrition_img_url;
+        public string nutrition_img_url
+        {
+            get { return _nutrition_img_url; }
+            set { _nutrition_img_url = value; nutrition_img_source = ImageSource.FromUri(new Uri(value)); }
+        }
+        [XmlIgnore]
         public ImageSource nutrition_img_source { get; set; }
 
         public ObservableCollection<BestBeforeDate> bestBeforeDate { get; set; } = new ObservableCollection<BestBeforeDate>();

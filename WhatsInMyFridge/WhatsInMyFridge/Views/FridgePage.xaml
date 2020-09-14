@@ -5,32 +5,51 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:WhatsInMyFridge.Controls"
     xmlns:models="clr-namespace:WhatsInMyFridge.Models"
+    xmlns:views="clr-namespace:WhatsInMyFridge.Views"
     xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
     x:DataType="vm:FridgeViewModel">
-    <CollectionView
-        x:DataType="vm:FridgeViewModel"
-        ItemSizingStrategy="MeasureAllItems"
-        ItemsLayout="VerticalGrid, 2"
-        ItemsSource="{Binding foodList}"
-        SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
-                        <RowDefinition Height="50" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0" Source="{Binding image}" />
-                    <Label
-                        Grid.Row="1"
-                        HorizontalOptions="Center"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding combinedAmountName}" />
-                    <controls:FridgeGrid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                    </controls:FridgeGrid.GestureRecognizers>
-                </controls:FridgeGrid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <AbsoluteLayout Grid.Row="0">
+            <CollectionView
+                x:DataType="vm:FridgeViewModel"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsLayout="VerticalGrid, 2"
+                ItemsSource="{Binding foodList}"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Food">
+                        <controls:FridgeGrid FoodItem="{Binding .}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100" />
+                                <RowDefinition Height="50" />
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0" Source="{Binding main_img}" />
+                            <Label
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding combinedAmountName}" />
+                            <controls:FridgeGrid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </controls:FridgeGrid.GestureRecognizers>
+                        </controls:FridgeGrid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <ImageButton
+                x:Name="fab"
+                AbsoluteLayout.LayoutBounds=".95,.95,80,80"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="{StaticResource colorAccent}"
+                Clicked="fab_Clicked"
+                CornerRadius="50" />
+        </AbsoluteLayout>
+        <views:AfterScanPopup
+            x:Name="afterScanPopup"
+            Grid.Row="0"
+            IsVisible="False" />
+    </Grid>
 </ContentPage>
