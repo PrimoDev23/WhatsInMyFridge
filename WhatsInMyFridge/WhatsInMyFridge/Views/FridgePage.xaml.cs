@@ -27,15 +27,19 @@ namespace WhatsInMyFridge.Views
             {
                 Amount = 2,
                 bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(10)), new BestBeforeDate(DateTime.Now.AddDays(-1)) },
-                Name = "Milch"
+                Name = "Milch",
+                main_img = new UriImageSource() { Uri = new Uri("https://frogcoffee.de/media/image/83/ab/c2/x1034352938avFptQAoOWw0Bi_600x600.png.pagespeed.ic.dBXAjKUA1N.png") },
             });
 
             viewModel.foodList.Add(new Food()
             {
                 Amount = 1,
                 bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5)) },
-                Name = "Ketchup"
+                Name = "Tomate",
+                main_img = new UriImageSource() { Uri = new Uri("https://www.boeschbodenspies.com/wp-content/uploads/2017/08/tomato.png") },
             });
+
+            viewModel.FilteredFoodList = new ObservableCollection<Food>(viewModel.foodList);
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

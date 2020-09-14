@@ -22,6 +22,14 @@ namespace WhatsInMyFridge.Controls
 
         public static readonly BindableProperty FoodItemProperty = BindableProperty.Create(nameof(FoodItem), typeof(Food), typeof(FridgeGrid), null);
 
+        public RecipeModel RecipeItem
+        {
+            get { return (RecipeModel)GetValue(RecipeItemProperty); }
+            set { SetValue(RecipeItemProperty, value); }
+        }
+
+        public static readonly BindableProperty RecipeItemProperty = BindableProperty.Create(nameof(RecipeItem), typeof(RecipeModel), typeof(FridgeGrid), null);
+
         #endregion Properties
 
         public FridgeGrid()

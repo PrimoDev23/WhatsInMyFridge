@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WhatsInMyFridge.Views.RecipeOverview"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:WhatsInMyFridge.Controls"
+    xmlns:models="clr-namespace:WhatsInMyFridge.Models"
+    xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    Title="What's in my fridge"
+    x:DataType="vm:RecipeOverviewModel">
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="cooking_hat_white.png" />
+    </ContentPage.ToolbarItems>
+
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130" />
+            <RowDefinition Height="120" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <AbsoluteLayout Grid.Row="0">
+
+            <Image
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                Aspect="AspectFill"
+                Source="recipe_view.png" />
+            <AbsoluteLayout
+                x:Name="ViewControls"
+                Margin="10,10,10,10"
+                AbsoluteLayout.LayoutBounds="1,1,1,.90"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="#66000000">
+                <StackLayout
+                    Margin="20,20,20,20"
+                    AbsoluteLayout.LayoutBounds="1,1,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Transparent"
+                    Orientation="Vertical">
+                    <Grid Margin="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Entry
+                            Grid.Column="0"
+                            BackgroundColor="#77000000"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Suchtext"
+                            TextColor="White"
+                            WidthRequest="250" />
+                    </Grid>
+                </StackLayout>
+            </AbsoluteLayout>
+
+        </AbsoluteLayout>
+
+        <StackLayout Grid.Row="1" Orientation="Vertical">
+
+            <Frame HeightRequest="80">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="100" />
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        FontSize="20"
+                        Text="Ausgewählte Zutaten:" />
+
+                    <CollectionView
+                        Grid.Row="1"
+                        x:DataType="vm:RecipeOverviewModel"
+                        ItemSizingStrategy="MeasureAllItems"
+                        ItemsLayout="VerticalGrid, 8"
+                        ItemsSource="{Binding foodList}"
+                        SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image
+                                        Grid.Column="0"
+                                        HeightRequest="50"
+                                        Source="{Binding main_img}" />
+
+                                    <controls:FridgeGrid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </controls:FridgeGrid.GestureRecognizers>
+                                </controls:FridgeGrid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </Grid>
+            </Frame>
+
+        </StackLayout>
+
+        <CollectionView
+            Grid.Row="2"
+            x:DataType="vm:RecipeOverviewModel"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding RecipeList}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <controls:FridgeGrid x:DataType="models:RecipeModel" RecipeItem="{Binding .}">
+
+                        <Frame
+                            Margin="5"
+                            Padding="1"
+                            BackgroundColor="Black"
+                            CornerRadius="12"
+                            HasShadow="true">
+                            <Frame
+                                Margin="2"
+                                Padding="10"
+                                Background="#FF03a9f4"
+                                CornerRadius="10"
+                                HasShadow="True">
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="35" />
+                                        <RowDefinition Height="85" />
+                                        <RowDefinition Height="45" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding RecipeName}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+
+                                    <Image
+                                        Grid.RowSpan="4"
+                                        Grid.Column="1"
+                                        HeightRequest="80"
+                                        Source="{Binding RecipeImage}"
+                                        WidthRequest="80" />
+
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        FontAttributes="Italic"
+                                        FontSize="8"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding ShortDescription}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Start" />
+
+                                    <Grid
+                                        Grid.Row="2"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="45" />
+                                            <RowDefinition Height="45" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="45" />
+                                            <ColumnDefinition Width="45" />
+                                            <ColumnDefinition Width="45" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Source="cookingtime.png" />
+                                        <Image
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Source="fastfood_18dp.png" />
+                                        <Image
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            Source="kalories.png" />
+
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            FontSize="10"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding CookingTimePlaceholder}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontSize="10"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding IngredientPlaceholder}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            FontSize="10"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding KilocaloriesPlaceholder}" />
+
+
+                                    </Grid>
+
+                                </Grid>
+                            </Frame>
+                        </Frame>
+
+                        <!--<controls:FridgeGrid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </controls:FridgeGrid.GestureRecognizers>-->
+                    </controls:FridgeGrid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+    </Grid>
+</ContentPage>

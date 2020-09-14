@@ -136,4 +136,40 @@
       <Name>WhatsInMyFridge</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\fastfood_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kitchen_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\restaurant_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\settings_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ingridients.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\nutriscore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cooking_hat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cooking_hat_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ingridients_view_dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\recipe_view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cookingtime.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\kalories.png" />
+  </ItemGroup>
 </Project>

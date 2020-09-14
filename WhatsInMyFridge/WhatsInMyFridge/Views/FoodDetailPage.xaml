@@ -5,8 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:models="clr-namespace:WhatsInMyFridge.Models"
     xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
-    x:DataType="vm:FoodDetailViewModel"
-    >
+    x:DataType="vm:FoodDetailViewModel">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="200" />
@@ -40,5 +39,6 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Frame>
+
     </Grid>
 </ContentPage>

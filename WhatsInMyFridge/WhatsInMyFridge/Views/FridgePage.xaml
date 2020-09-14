@@ -6,31 +6,120 @@
     xmlns:controls="clr-namespace:WhatsInMyFridge.Controls"
     xmlns:models="clr-namespace:WhatsInMyFridge.Models"
     xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    Title="What's in my fridge"
     x:DataType="vm:FridgeViewModel">
-    <CollectionView
-        x:DataType="vm:FridgeViewModel"
-        ItemSizingStrategy="MeasureAllItems"
-        ItemsLayout="VerticalGrid, 2"
-        ItemsSource="{Binding foodList}"
-        SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
-                        <RowDefinition Height="50" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0" Source="{Binding image}" />
-                    <Label
-                        Grid.Row="1"
-                        HorizontalOptions="Center"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding combinedAmountName}" />
-                    <controls:FridgeGrid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                    </controls:FridgeGrid.GestureRecognizers>
-                </controls:FridgeGrid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="cooking_hat_white.png" />
+    </ContentPage.ToolbarItems>
+
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <AbsoluteLayout Grid.Row="0">
+
+            <Image
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                Aspect="AspectFill"
+                Source="ingridients_view_dark.png" />
+            <AbsoluteLayout
+                x:Name="ViewControls"
+                Margin="10,10,10,10"
+                AbsoluteLayout.LayoutBounds="1,1,1,.90"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="#66000000">
+                <StackLayout
+                    Margin="20,20,20,20"
+                    AbsoluteLayout.LayoutBounds="1,1,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Transparent"
+                    Orientation="Vertical">
+                    <Grid Margin="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Entry
+                            Grid.Column="0"
+                            BackgroundColor="#77000000"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Suchtext"
+                            Text="{Binding SearchText, Mode=TwoWay}"
+                            TextColor="White"
+                            WidthRequest="250" />
+                    </Grid>
+                </StackLayout>
+            </AbsoluteLayout>
+
+        </AbsoluteLayout>
+
+        <CollectionView
+            Grid.Row="1"
+            x:DataType="vm:FridgeViewModel"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsSource="{Binding FilteredFoodList}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
+
+                        <Frame
+                            Margin="5"
+                            Padding="1"
+                            BackgroundColor="Black"
+                            CornerRadius="12"
+                            HasShadow="true">
+                            <Frame
+                                Margin="2"
+                                Padding="10"
+                                Background="White"
+                                CornerRadius="10"
+                                HasShadow="True">
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label
+                                        Grid.Column="0"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding combinedAmountName}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+
+                                    <Image
+                                        Grid.Column="1"
+                                        HeightRequest="60"
+                                        Source="{Binding main_img}" />
+                                    <Image
+                                        Grid.Column="2"
+                                        HeightRequest="30"
+                                        Source="nutriscore.png" />
+
+                                </Grid>
+                            </Frame>
+                        </Frame>
+
+                        <controls:FridgeGrid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </controls:FridgeGrid.GestureRecognizers>
+                    </controls:FridgeGrid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+    </Grid>
+
 </ContentPage>
