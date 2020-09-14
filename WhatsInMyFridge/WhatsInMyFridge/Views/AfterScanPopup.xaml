@@ -6,9 +6,9 @@
     xmlns:behaviors="clr-namespace:WhatsInMyFridge.Behaviors">
     <Grid BackgroundColor="{StaticResource colorBlurBack}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="280" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
@@ -26,11 +26,7 @@
                     Keyboard="Numeric"
                     Placeholder="Anzahl"
                     TextChanged="txtAmount_TextChanged" />
-                <Label
-                    x:Name="AmountValid"
-                    IsVisible="False"
-                    Text="Die eingegebene Anzahl ist ungültig!"
-                    TextColor="Red" />
+                <Label x:Name="AmountValid" TextColor="Red" />
                 <Label Text="Mindesthaltbarkeitsdatum" />
                 <Entry
                     x:Name="txtDate"
@@ -40,22 +36,24 @@
                         <behaviors:MaskedBehavior Mask="XX.XX.XXXX" />
                     </Entry.Behaviors>
                 </Entry>
-                <Label
-                    x:Name="DateValid"
-                    IsVisible="False"
-                    Text="Das eingegebene Datum ist üngültig!"
-                    TextColor="Red" />
+                <Label x:Name="DateValid" TextColor="Red" />
                 <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
                     <Button
                         x:Name="btnCancel"
+                        BackgroundColor="Transparent"
                         Clicked="btnCancel_Clicked"
                         HorizontalOptions="End"
-                        Text="Abbrechen" />
+                        Text="Abbrechen"
+                        TextColor="Black"
+                        Visual="Default" />
                     <Button
                         x:Name="btnOK"
+                        BackgroundColor="Transparent"
                         Clicked="btnOK_Clicked"
                         HorizontalOptions="End"
-                        Text="OK" />
+                        Text="OK"
+                        TextColor="Black"
+                        Visual="Default" />
                 </StackLayout>
             </StackLayout>
         </Frame>

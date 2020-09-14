@@ -49,11 +49,12 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Entry
+                            x:Name="txtSearch"
                             Grid.Column="0"
                             BackgroundColor="#77000000"
                             HorizontalOptions="FillAndExpand"
                             Placeholder="Suchtext"
-                            Text="{Binding SearchText, Mode=TwoWay}"
+                            TextChanged="txtSearch_TextChanged"
                             TextColor="White"
                             WidthRequest="250" />
                     </Grid>
@@ -73,7 +74,6 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
-
                             <Frame
                                 Margin="5"
                                 Padding="1"
@@ -89,27 +89,26 @@
                                     <Grid>
 
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="150" />
-                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="AUTO" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Label
+                                        <Image
                                             Grid.Column="0"
-                                            HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center"
+                                            HeightRequest="60"
+                                            Source="{Binding main_img}" />
+                                        <Label
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
                                             Text="{Binding combinedAmountName}"
                                             TextColor="Black"
                                             VerticalTextAlignment="Center" />
-
-                                        <Image
-                                            Grid.Column="1"
-                                            HeightRequest="60"
-                                            Source="{Binding main_img}" />
                                         <Image
                                             Grid.Column="2"
                                             HeightRequest="30"
-                                            Source="nutriscore.png" />
+                                            HorizontalOptions="End"
+                                            Source="{Binding nutrition_img_source}" />
 
                                     </Grid>
                                 </Frame>

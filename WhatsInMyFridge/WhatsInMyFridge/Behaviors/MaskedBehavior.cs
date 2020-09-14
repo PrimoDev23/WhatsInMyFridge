@@ -30,9 +30,9 @@ namespace WhatsInMyFridge.Behaviors
             base.OnDetachingFrom(entry);
         }
 
-        IDictionary<int, char> _positions;
+        private IDictionary<int, char> _positions;
 
-        void SetPositions()
+        private void SetPositions()
         {
             if (string.IsNullOrEmpty(Mask))
             {
@@ -42,8 +42,12 @@ namespace WhatsInMyFridge.Behaviors
 
             var list = new Dictionary<int, char>();
             for (var i = 0; i < Mask.Length; i++)
+            {
                 if (Mask[i] != 'X')
+                {
                     list.Add(i, Mask[i]);
+                }
+            }
 
             _positions = list;
         }
@@ -64,12 +68,14 @@ namespace WhatsInMyFridge.Behaviors
             }
 
             foreach (var position in _positions)
+            {
                 if (text.Length >= position.Key + 1)
                 {
                     var value = position.Value.ToString();
                     if (text.Substring(position.Key, 1) != value)
                         text = text.Insert(position.Key, value);
                 }
+            }
 
             if (entry.Text != text)
                 entry.Text = text;

@@ -23,10 +23,11 @@ namespace WhatsInMyFridge.Helper
 
         public static IEnumerable<Food> getFoodsByName(this ObservableCollection<Food> items, string name)
         {
+            string lower = name.ToLower();
             for(int i = 0;i < items.Count; i++)
             {
                 Food food = items[i];
-                if(food.Name.Equals(name, StringComparison.OrdinalIgnoreCase)){
+                if(food.Name.ToLower().Contains(lower)){
                     yield return food;
                 }
             }

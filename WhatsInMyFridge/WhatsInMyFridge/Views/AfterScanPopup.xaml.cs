@@ -12,10 +12,10 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AfterScanPopup : ContentView
     {
-        TaskCompletionSource<ValueTuple<double, DateTime>> complete = new TaskCompletionSource<(double, DateTime)>();
+        private TaskCompletionSource<ValueTuple<double, DateTime>> complete;
 
-        object valid_lock = new object();
-        bool valid = false;
+        private readonly object valid_lock = new object();
+        private bool valid = false;
 
         public AfterScanPopup()
         {
@@ -24,17 +24,20 @@ namespace WhatsInMyFridge.Views
 
         public async Task<ValueTuple<double, DateTime>> waitForFinish()
         {
-            return await complete.Task;
+            complete = new TaskCompletionSource<(double, DateTime)>();
+            ValueTuple<double, DateTime> tuple = await complete.Task;
+            txtAmount.Text = "";
+            txtDate.Text = "";
+            return tuple;
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e)
         {
-            complete.TrySetResult((-1, DateTime.MinValue));
+            complete?.TrySetResult((-1, DateTime.MinValue));
         }
 
         private void btnOK_Clicked(object sender, EventArgs e)
         {
-
             lock (valid_lock)
             {
                 if (!valid)
@@ -43,17 +46,16 @@ namespace WhatsInMyFridge.Views
                 }
             }
 
-            complete.TrySetResult((Double.Parse(txtAmount.Text), DateTime.Parse(txtDate.Text)));
+            complete?.TrySetResult((Double.Parse(txtAmount.Text), DateTime.Parse(txtDate.Text)));
         }
 
         private void txtAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is Entry entry)
             {
-                double parsed;
-                if (!Double.TryParse(entry.Text, out parsed))
+                if (!double.TryParse(entry.Text, out _))
                 {
-                    AmountValid.IsVisible = true;
+                    AmountValid.Text = "Die eingegebene Anzahl ist ungültig!";
 
                     lock (valid_lock)
                     {
@@ -62,7 +64,7 @@ namespace WhatsInMyFridge.Views
                 }
                 else
                 {
-                    AmountValid.IsVisible = false;
+                    AmountValid.Text = null;
 
                     lock (valid_lock)
                     {
@@ -76,10 +78,9 @@ namespace WhatsInMyFridge.Views
         {
             if (sender is Entry entry)
             {
-                DateTime parsed;
-                if (!DateTime.TryParse(entry.Text, out parsed))
+                if (!DateTime.TryParse(entry.Text, out _))
                 {
-                    DateValid.IsVisible = true;
+                    DateValid.Text = "Das eingegebene Datum ist üngültig!";
 
                     lock (valid_lock)
                     {
@@ -88,7 +89,7 @@ namespace WhatsInMyFridge.Views
                 }
                 else
                 {
-                    DateValid.IsVisible = false;
+                    DateValid.Text = "";
 
                     lock (valid_lock)
                     {

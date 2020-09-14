@@ -92,9 +92,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ingridients.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\WhatsInMyFridge\WhatsInMyFridge.csproj">
       <Project>{A687BF0B-FD33-4438-AE7C-2E552116BF42}</Project>
       <Name>WhatsInMyFridge</Name>

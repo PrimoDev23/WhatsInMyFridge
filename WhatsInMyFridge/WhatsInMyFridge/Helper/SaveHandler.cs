@@ -12,16 +12,10 @@ namespace WhatsInMyFridge.Helper
     {
         public static void saveFood(ObservableCollection<Food> items)
         {
-            try
+            using (FileStream fs = new FileStream(VarContainer.food_path, FileMode.Create))
             {
-                using (FileStream fs = new FileStream(VarContainer.food_path, FileMode.Create))
-                {
-                    XmlSerializer xml = new XmlSerializer(typeof(ObservableCollection<Food>));
-                    xml.Serialize(fs, new ObservableCollection<Food>(items));
-                }
-            }catch(Exception ex)
-            {
-
+                XmlSerializer xml = new XmlSerializer(typeof(ObservableCollection<Food>));
+                xml.Serialize(fs, new ObservableCollection<Food>(items));
             }
         }
 
@@ -32,7 +26,7 @@ namespace WhatsInMyFridge.Helper
                 return new ObservableCollection<Food>();
             }
 
-            using(FileStream fs = new FileStream(VarContainer.food_path, FileMode.Open))
+            using (FileStream fs = new FileStream(VarContainer.food_path, FileMode.Open))
             {
                 XmlSerializer xml = new XmlSerializer(typeof(ObservableCollection<Food>));
                 return (ObservableCollection<Food>)xml.Deserialize(fs);
