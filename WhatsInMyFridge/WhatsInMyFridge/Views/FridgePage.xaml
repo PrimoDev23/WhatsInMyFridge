@@ -56,27 +56,21 @@
                                 BackgroundColor="White"
                                 CornerRadius="20"
                                 HasShadow="True">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="60" />
-                                        <ColumnDefinition Width="AUTO" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                                <StackLayout Orientation="Horizontal">
                                     <Image
-                                        Grid.Column="0"
                                         HeightRequest="60"
-                                        Source="{Binding main_img}" />
+                                        Source="{Binding main_img}"
+                                        WidthRequest="60" />
                                     <Label
-                                        Grid.Column="1"
                                         Margin="5,0,0,0"
                                         Text="{Binding combinedAmountName}"
                                         TextColor="Black"
                                         VerticalTextAlignment="Center" />
                                     <Image
-                                        Grid.Column="2"
-                                        HorizontalOptions="Start"
-                                        Source="{Binding nutrition_img_source}" />
-                                </Grid>
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="{Binding nutrition_img_source}"
+                                        WidthRequest="60" />
+                                </StackLayout>
                             </Frame>
 
                             <controls:FridgeGrid.GestureRecognizers>
