@@ -19,49 +19,29 @@
             <RowDefinition Height="130" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <AbsoluteLayout Grid.Row="0">
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <Image
-                AbsoluteLayout.LayoutBounds="1,1,1,1"
-                AbsoluteLayout.LayoutFlags="All"
+                Grid.Row="0"
                 Aspect="AspectFill"
                 Source="ingridients_view_dark.png" />
-            <AbsoluteLayout
-                x:Name="ViewControls"
-                Margin="10,10,10,10"
-                AbsoluteLayout.LayoutBounds="1,1,1,.90"
-                AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="#66000000">
-                <StackLayout
-                    Margin="20,20,20,20"
-                    AbsoluteLayout.LayoutBounds="1,1,1,1"
-                    AbsoluteLayout.LayoutFlags="All"
-                    BackgroundColor="Transparent"
-                    Orientation="Vertical">
-                    <Grid Margin="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Entry
-                            x:Name="txtSearch"
-                            Grid.Column="0"
-                            BackgroundColor="#77000000"
-                            HorizontalOptions="FillAndExpand"
-                            Placeholder="Suchtext"
-                            TextChanged="txtSearch_TextChanged"
-                            TextColor="White"
-                            WidthRequest="250" />
-                    </Grid>
-                </StackLayout>
-            </AbsoluteLayout>
-
-        </AbsoluteLayout>
+            <Entry
+                x:Name="txtSearch"
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="5"
+                BackgroundColor="#77000000"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Suchtext"
+                TextChanged="txtSearch_TextChanged"
+                TextColor="White"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="250" />
+        </Grid>
 
         <AbsoluteLayout Grid.Row="1">
-
             <CollectionView
                 Grid.Row="1"
                 x:DataType="vm:FridgeViewModel"
@@ -72,43 +52,26 @@
                     <DataTemplate>
                         <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
                             <Frame
-                                Margin="5"
-                                Padding="1"
-                                BackgroundColor="Black"
-                                CornerRadius="12"
-                                HasShadow="true">
-                                <Frame
-                                    Margin="2"
-                                    Padding="10"
-                                    Background="White"
-                                    CornerRadius="10"
-                                    HasShadow="True">
-                                    <Grid>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="60" />
-                                            <ColumnDefinition Width="AUTO" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Image
-                                            Grid.Column="0"
-                                            HeightRequest="60"
-                                            Source="{Binding main_img}" />
-                                        <Label
-                                            Grid.Column="1"
-                                            Margin="5,0,0,0"
-                                            Text="{Binding combinedAmountName}"
-                                            TextColor="Black"
-                                            VerticalTextAlignment="Center" />
-                                        <Image
-                                            Grid.Column="2"
-                                            HeightRequest="30"
-                                            HorizontalOptions="End"
-                                            Source="{Binding nutrition_img_source}" />
-
-                                    </Grid>
-                                </Frame>
+                                Margin="10"
+                                Padding="10"
+                                BackgroundColor="White"
+                                CornerRadius="20"
+                                HasShadow="True">
+                                <StackLayout Orientation="Horizontal">
+                                    <Image
+                                        HeightRequest="60"
+                                        Source="{Binding main_img}"
+                                        WidthRequest="60" />
+                                    <Label
+                                        Margin="5,0,0,0"
+                                        Text="{Binding combinedAmountName}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Image
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="{Binding nutrition_img_source}"
+                                        WidthRequest="60" />
+                                </StackLayout>
                             </Frame>
 
                             <controls:FridgeGrid.GestureRecognizers>

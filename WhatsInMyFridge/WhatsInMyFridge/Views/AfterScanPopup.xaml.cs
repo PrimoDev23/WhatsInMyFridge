@@ -14,12 +14,13 @@ namespace WhatsInMyFridge.Views
     {
         private TaskCompletionSource<ValueTuple<double, DateTime>> complete;
 
-        private readonly object valid_lock = new object();
-        private bool valid = false;
+        DateTime default_dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
         public AfterScanPopup()
         {
             InitializeComponent();
+
+            date.Date = default_dt;
         }
 
         public async Task<ValueTuple<double, DateTime>> waitForFinish()
@@ -27,7 +28,7 @@ namespace WhatsInMyFridge.Views
             complete = new TaskCompletionSource<(double, DateTime)>();
             ValueTuple<double, DateTime> tuple = await complete.Task;
             txtAmount.Text = "";
-            txtDate.Text = "";
+            date.Date = default_dt;
             return tuple;
         }
 
@@ -38,64 +39,30 @@ namespace WhatsInMyFridge.Views
 
         private void btnOK_Clicked(object sender, EventArgs e)
         {
-            lock (valid_lock)
-            {
-                if (!valid)
-                {
-                    return;
-                }
-            }
+            double parsed;
+            DateTime dt;
 
-            complete?.TrySetResult((Double.Parse(txtAmount.Text), string.IsNullOrEmpty(txtDate.Text) ? DateTime.MinValue :  DateTime.Parse(txtDate.Text)));
+            if (double.TryParse(txtAmount.Text, out parsed))
+            {
+                complete?.TrySetResult((parsed, date.Date));
+            }
         }
 
         private void txtAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (sender is Entry entry)
+            if (!(txtAmount.Text?.Length > 0))
             {
-                if (!double.TryParse(entry.Text, out _))
-                {
-                    AmountValid.Text = "Die eingegebene Anzahl ist ungültig!";
-
-                    lock (valid_lock)
-                    {
-                        valid = false;
-                    }
-                }
-                else
-                {
-                    AmountValid.Text = null;
-
-                    lock (valid_lock)
-                    {
-                        valid = true;
-                    }
-                }
+                AmountValid.Text = null;
+                return;
             }
-        }
 
-        private void txtDate_Unfocused(object sender, FocusEventArgs e)
-        {
-            if (sender is Entry entry)
+            if (!double.TryParse(txtAmount.Text, out _))
             {
-                if (!DateTime.TryParse(entry.Text, out _))
-                {
-                    DateValid.Text = "Das eingegebene Datum ist üngültig!";
-
-                    lock (valid_lock)
-                    {
-                        valid = false;
-                    }
-                }
-                else
-                {
-                    DateValid.Text = "";
-
-                    lock (valid_lock)
-                    {
-                        valid = true;
-                    }
-                }
+                AmountValid.Text = "Die eingegebene Anzahl ist ungültig!";
+            }
+            else
+            {
+                AmountValid.Text = null;
             }
         }
     }

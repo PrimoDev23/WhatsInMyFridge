@@ -28,14 +28,7 @@
                     TextChanged="txtAmount_TextChanged" />
                 <Label x:Name="AmountValid" TextColor="Red" />
                 <Label Text="Mindesthaltbarkeitsdatum" />
-                <Entry
-                    x:Name="txtDate"
-                    Keyboard="Numeric"
-                    Unfocused="txtDate_Unfocused">
-                    <Entry.Behaviors>
-                        <behaviors:MaskedBehavior Mask="XX.XX.XXXX" />
-                    </Entry.Behaviors>
-                </Entry>
+                <DatePicker x:Name="date" />
                 <Label x:Name="DateValid" TextColor="Red" />
                 <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
                     <Button
