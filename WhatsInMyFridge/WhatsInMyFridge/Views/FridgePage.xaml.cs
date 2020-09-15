@@ -18,7 +18,7 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FridgePage : ContentPage
     {
-        private readonly FridgeViewModel viewModel = new FridgeViewModel();
+        public readonly FridgeViewModel viewModel = new FridgeViewModel();
 
         public FridgePage()
         {

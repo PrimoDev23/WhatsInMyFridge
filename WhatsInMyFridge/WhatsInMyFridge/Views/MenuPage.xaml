@@ -8,7 +8,10 @@
     android:TabbedPage.IsSmoothScrollEnabled="False"
     android:TabbedPage.ToolbarPlacement="Bottom"
     Visual="Material">
-    <NavigationPage Title="Kühlschrank" IconImageSource="kitchen_48dp.png">
+    <NavigationPage
+        x:Name="fridge"
+        Title="Kühlschrank"
+        IconImageSource="kitchen_48dp.png">
         <x:Arguments>
             <views:FridgePage />
         </x:Arguments>

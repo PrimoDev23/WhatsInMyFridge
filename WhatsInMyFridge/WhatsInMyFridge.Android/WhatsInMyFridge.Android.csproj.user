@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>HUAWEI LYA-L29</SelectedDevice>
     <DefaultDevice>mydevice_nougat_7_1_-_api_25</DefaultDevice>
+    <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

@@ -19,12 +19,12 @@ namespace WhatsInMyFridge.Models
 
         public string CookingTimePlaceholder
         {
-            get { return $"{CookingTime}\nmin";  }
+            get { return $"{CookingTime} min";  }
         }
 
         public string KilocaloriesPlaceholder
         {
-            get { return $"{Kilocalories}\nkcal";  }
+            get { return $"{Kilocalories} kcal";  }
         }
 
 
@@ -35,6 +35,8 @@ namespace WhatsInMyFridge.Models
         public ImageSource RecipeImage { get; set; }
 
         public ObservableCollection<Food> MainIngredients { get; set; } = new ObservableCollection<Food>();
+
+        public List<string> Intructions { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

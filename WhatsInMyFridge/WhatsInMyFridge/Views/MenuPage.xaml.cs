@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WhatsInMyFridge.Helper;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +15,7 @@ namespace WhatsInMyFridge.Views
         public MenuPage()
         {
             InitializeComponent();
+            VarContainer.fridgePage = (FridgePage)fridge.CurrentPage;
         }
     }
 }

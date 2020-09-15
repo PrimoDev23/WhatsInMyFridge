@@ -27,6 +27,7 @@ namespace WhatsInMyFridge.Models
         public string ingredients_string { get; set; }
         public string brand { get; set; }
         public string BarCode { get; set; }
+        public Color selectionColor { get; set; }
 
         private string _main_img_url;
         public string main_img_url
