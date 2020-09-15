@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -12,6 +13,37 @@ namespace WhatsInMyFridge.Helper
 {
     public static class APIHelper
     {
+
+        public static async Task<RecipeModel> getRecipesFromAPI(ObservableCollection<Food> ingredients)
+        {
+
+            string url = $"https://whatsinmyfridge123.herokuapp.com/recipes";
+            string json;
+
+            WebRequest request = WebRequest.Create(url);
+            using (HttpWebResponse resp = (HttpWebResponse)await request.GetResponseAsync().ConfigureAwait(false))
+            {
+                using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
+                {
+                    json = sr.ReadToEnd();
+                }
+            }
+
+            try
+            {
+                JArray obj = JArray.Parse(json);
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+
+
+
+            return null;
+        }
+
         public static async Task<Food> getFoodFromCode(string Code)
         {
             try
