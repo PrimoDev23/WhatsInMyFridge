@@ -31,6 +31,11 @@ namespace WhatsInMyFridge.Helper
 
                 JObject obj = JObject.Parse(json);
 
+                if(obj["status_verbose"].ToString() == "product not found")
+                {
+                    return null;
+                }
+
                 JToken products = obj["product"];
 
                 JToken ingredients = products["ingredients_text"];
@@ -39,17 +44,28 @@ namespace WhatsInMyFridge.Helper
                 JToken brand = products["brands"];
                 JToken name = products["product_name"];
 
-                return new Food()
+                Food food = new Food()
                 {
-                    main_img_url = front_image != null ? front_image.ToString() : "",
                     ingredients_string = ingredients != null ? ingredients.ToString() : "",
                     Name = name != null ? name.ToString() : "",
                     brand = brand != null ? brand.ToString() : "",
-                    nutrition_img_url = nutri_grade != null ? $"https://static.openfoodfacts.org/images/misc/nutriscore-{nutri_grade.ToString()}.png" : "",
                     BarCode = Code
                 };
+
+                //YES sadly this is the only way to not throw any exception...
+                if(front_image != null)
+                {
+                    food.main_img_url = front_image.ToString();
+                }
+
+                if(nutri_grade != null)
+                {
+                    food.nutrition_img_url = $"https://static.openfoodfacts.org/images/misc/nutriscore-{nutri_grade.ToString()}.png";
+                }
+
+                return food;
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }

@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>Xiaomi Mi 9T Pro</SelectedDevice>
     <DefaultDevice>mydevice_nougat_7_1_-_api_25</DefaultDevice>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>

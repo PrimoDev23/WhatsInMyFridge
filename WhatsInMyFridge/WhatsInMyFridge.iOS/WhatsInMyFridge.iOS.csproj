@@ -175,4 +175,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\kalories.png" />
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarWhatsInMyFridgeiOSHideInfoBar="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
