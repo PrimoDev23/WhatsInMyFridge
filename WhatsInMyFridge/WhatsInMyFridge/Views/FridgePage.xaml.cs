@@ -133,6 +133,7 @@ namespace WhatsInMyFridge.Views
 
                         break;
                     case "Manuell eingeben":
+                        addItemView.IsVisible = true;
                         break;
                 }
 

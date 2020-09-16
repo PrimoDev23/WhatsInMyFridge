@@ -19,6 +19,19 @@ namespace WhatsInMyFridge.Helper
                 }
             }
             return null;
+
+        }
+        public static Food foodAlreadyAddedName(this ObservableCollection<Food> items, string name)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                Food food = items[i];
+                if(food.name == name)
+                {
+                    return food;
+                }
+            }
+            return null;
         }
 
         public static IEnumerable<Food> getFoodsByName(this ObservableCollection<Food> items, string name)

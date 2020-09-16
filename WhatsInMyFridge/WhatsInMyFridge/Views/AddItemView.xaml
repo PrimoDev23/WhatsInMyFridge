@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="WhatsInMyFridge.Views.AddItemView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:WhatsInMyFridge.Models"
+    xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    x:DataType="vm:AddItemViewModel">
+    <Grid BackgroundColor="{StaticResource colorBlurBack}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Frame
+            Grid.Row="1"
+            Grid.Column="1"
+            BackgroundColor="White"
+            CornerRadius="20"
+            HasShadow="True">
+            <StackLayout Orientation="Vertical">
+                <Entry
+                    x:Name="txtName"
+                    Placeholder="Name"
+                    TextChanged="txtName_TextChanged" />
+                <Entry x:Name="txtAmount" Placeholder="Menge" />
+                <Picker Title="Einheit" SelectedIndex="0">
+                    <Picker.Items>
+                        <x:String>Anzahl</x:String>
+                        <x:String>ml</x:String>
+                        <x:String>l</x:String>
+                        <x:String>g</x:String>
+                        <x:String>kg</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Button
+                    Command="{Binding captureImageCommand}"
+                    Text="Bild machen"
+                    Visual="Default" />
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentView>

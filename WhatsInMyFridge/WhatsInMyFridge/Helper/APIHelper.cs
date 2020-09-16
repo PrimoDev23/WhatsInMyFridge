@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WhatsInMyFridge.Models;
 using Xamarin.Forms;
@@ -124,7 +125,10 @@ namespace WhatsInMyFridge.Helper
 
                 if (quantity != null)
                 {
-                    string[] split = quantity.ToString().Replace(",", ".").Split(' ');
+                    string[] split = new string[2];
+
+                    split[0] = Regex.Match(quantity.ToString(), "[0-9,.]").Value;
+                    split[1] = quantity.ToString().Replace(split[0], "").Replace(" ", "");
 
                     if (double.TryParse(split[0], out double parsed))
                     {
