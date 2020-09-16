@@ -7,6 +7,7 @@
     xmlns:models="clr-namespace:WhatsInMyFridge.Models"
     xmlns:views="clr-namespace:WhatsInMyFridge.Views"
     xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    x:Name="usedDialog"
     x:DataType="vm:SelectedItemsPopUpViewModel">
 
     <Grid BackgroundColor="{StaticResource colorBlurBack}">
@@ -34,12 +35,16 @@
                         ItemSizingStrategy="MeasureAllItems"
                         ItemsSource="{Binding CurrentIngredients, Mode=TwoWay}"
                         SelectedItems="{Binding SelectedIngredients, Mode=TwoWay}"
-                        SelectionMode="Multiple">
+                        SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                HorizontalItemSpacing="10"
+                                Orientation="Vertical"
+                                Span="1"
+                                VerticalItemSpacing="10" />
+                        </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-
-
-
                                 <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
                                     <Frame
                                         Margin="2"
@@ -50,29 +55,39 @@
 
                                         <Grid>
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="60" />
                                                 <ColumnDefinition Width="AUTO" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
                                             <Image
-                                                Grid.Column="0"
+                                                Grid.Column="1"
                                                 HeightRequest="60"
                                                 Source="{Binding main_img}" />
                                             <Label
-                                                Grid.Column="1"
+                                                Grid.Column="2"
                                                 Margin="5,0,0,0"
                                                 Text="{Binding combinedAmountName}"
                                                 TextColor="Black"
                                                 VerticalTextAlignment="Center" />
                                             <Image
-                                                Grid.Column="2"
+                                                Grid.Column="3"
                                                 HeightRequest="30"
                                                 HorizontalOptions="End"
                                                 Source="{Binding nutrition_img_source}" />
+                                            <Path
+                                                Grid.Row="0"
+                                                Margin="-2"
+                                                Data="{Binding checked_path_data}"
+                                                Fill="Black"
+                                                VerticalOptions="Center" />
                                         </Grid>
-                                    </Frame>
 
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.selectCommand, Source={x:Reference usedDialog}}" CommandParameter="{Binding .}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
 
                                 </controls:FridgeGrid>
                             </DataTemplate>

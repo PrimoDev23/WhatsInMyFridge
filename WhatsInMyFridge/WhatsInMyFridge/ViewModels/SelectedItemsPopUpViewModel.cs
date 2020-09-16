@@ -7,12 +7,16 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WhatsInMyFridge.Models;
+using Xamarin.Forms;
 
 namespace WhatsInMyFridge.ViewModels
 {
     public class SelectedItemsPopUpViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Command OKCommand { get; set; }
+        public Command<Food> selectCommand { get; set; }
 
         private ObservableCollection<Food> currentIngredients { get; set; } = new ObservableCollection<Food>();
 

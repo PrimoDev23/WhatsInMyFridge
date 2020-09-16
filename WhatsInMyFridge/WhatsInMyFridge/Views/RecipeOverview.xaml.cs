@@ -23,50 +23,6 @@ namespace WhatsInMyFridge.Views
         {
             InitializeComponent();
 
-            List<Food> debug = new List<Food>();
-
-            Food tomate = new Food()
-            {
-                name = "Tomate",
-                unit = "kg",
-                amount = 0.8,
-                imageUrl = "https://www.boeschbodenspies.com/wp-content/uploads/2017/08/tomato.png",
-                isInFridge = true,
-            };
-            debug.Add(tomate);
-
-            Food kartoffel = new Food()
-            {
-                name = "Kartoffeln",
-                unit = "kg",
-                amount = 2.2,
-                imageUrl = "https://www.alimentarium.org/de/system/files/thumbnails/image/AL027-01_pomme_de_terre_0.jpg",
-                isInFridge = true,
-            };
-            debug.Add(kartoffel);
-
-            Food milch = new Food()
-            {
-                name = "Milch",
-                unit = "l",
-                amount = 0.4,
-                imageUrl = "https://cdn.webshopapp.com/shops/47345/files/132823412/image.jpg",
-                isInFridge = false,
-            };
-            debug.Add(milch);
-
-            viewModel.RecipeList.Add(new RecipeModel()
-            {
-                shortDescription = "Chicken tikka masala, oft CTM abgekürzt, ist ein häufig in indischen Restaurants in Europa und Nordamerika angebotenes Currygericht aus gegrillten marinierten Hähnchenfleischstücken in einer würzigen Tomatensauce, das eigentlich der englischen Küche zuzurechnen ist.",
-                recipeName = "Chicken Tikka Masala",
-                cookingTime = 10,
-                kiloCalories = 780,
-                mainIngredients = new ObservableCollection<Food>(debug),
-                RecipeImageParsed = new UriImageSource() { Uri = new Uri("https://pinchofyum.com/wp-content/uploads/Chicken-Tikka-Masala-Square.jpg") },
-                instructions = new List<string>() { "1. Hühnchen in Topf" },
-            });
-            viewModel.FilteredRecipeList = new ObservableCollection<RecipeModel>(viewModel.RecipeList);
-
             BindingContext = viewModel;
         }
 
@@ -91,6 +47,7 @@ namespace WhatsInMyFridge.Views
                     if(avaiableRecipes != null)
                     {
                         viewModel.RecipeList = new ObservableCollection<RecipeModel>(avaiableRecipes);
+                        viewModel.FilteredRecipeList = viewModel.RecipeList;
                     }
                     else
                     {
