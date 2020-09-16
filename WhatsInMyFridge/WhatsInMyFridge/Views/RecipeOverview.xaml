@@ -95,10 +95,6 @@
                                         Grid.Column="0"
                                         HeightRequest="50"
                                         Source="{Binding main_img}" />
-
-                                    <controls:FridgeGrid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                    </controls:FridgeGrid.GestureRecognizers>
                                 </controls:FridgeGrid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

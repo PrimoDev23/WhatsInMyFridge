@@ -26,7 +26,7 @@ namespace WhatsInMyFridge.Views
             viewModel.foodList.Add(new Food()
             {
                 Amount = 2,
-                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(10)), new BestBeforeDate(DateTime.Now.AddDays(-1)) },
+                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(10), 0), new BestBeforeDate(DateTime.Now.AddDays(-1), 1) },
                 Name = "Milch",
                 main_img = new UriImageSource() { Uri = new Uri("https://frogcoffee.de/media/image/83/ab/c2/x1034352938avFptQAoOWw0Bi_600x600.png.pagespeed.ic.dBXAjKUA1N.png") },
             });
@@ -34,7 +34,7 @@ namespace WhatsInMyFridge.Views
             viewModel.foodList.Add(new Food()
             {
                 Amount = 1,
-                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5)) },
+                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5), 0) },
                 Name = "Tomate",
                 main_img = new UriImageSource() { Uri = new Uri("https://www.boeschbodenspies.com/wp-content/uploads/2017/08/tomato.png") },
             });
@@ -42,7 +42,7 @@ namespace WhatsInMyFridge.Views
             viewModel.foodList.Add(new Food()
             {
                 Amount = 1,
-                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5)) },
+                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5), 0) },
                 Name = "Tomate",
                 main_img = new UriImageSource() { Uri = new Uri("https://www.boeschbodenspies.com/wp-content/uploads/2017/08/tomato.png") },
             });
@@ -50,7 +50,7 @@ namespace WhatsInMyFridge.Views
             viewModel.foodList.Add(new Food()
             {
                 Amount = 1,
-                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5)) },
+                bestBeforeDate = new ObservableCollection<BestBeforeDate>() { new BestBeforeDate(DateTime.Now.AddDays(5), 0) },
                 Name = "Tomate",
                 main_img = new UriImageSource() { Uri = new Uri("https://www.boeschbodenspies.com/wp-content/uploads/2017/08/tomato.png") },
             });
@@ -65,14 +65,6 @@ namespace WhatsInMyFridge.Views
                 MainIngredients = new ObservableCollection<Food>(viewModel.foodList),
                 RecipeImage = new UriImageSource() { Uri = new Uri("https://pinchofyum.com/wp-content/uploads/Chicken-Tikka-Masala-Square.jpg") },
             }); 
-        }
-
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            if (sender is FridgeGrid grid)
-            {
-                Navigation.PushAsync(new FoodDetailPage(grid.FoodItem));
-            }
         }
     }
 }

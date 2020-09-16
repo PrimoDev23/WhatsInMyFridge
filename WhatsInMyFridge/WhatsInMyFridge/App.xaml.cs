@@ -13,7 +13,7 @@ namespace WhatsInMyFridge
 
             Device.SetFlags(new string[] { "Shapes_Experimental", "SwipeView_Experimental" });
 
-            MainPage = new MenuPage();
+            MainPage = new NavigationPage(new MenuPage());
         }
 
         protected override void OnStart()

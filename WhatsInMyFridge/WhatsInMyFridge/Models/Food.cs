@@ -24,7 +24,6 @@ namespace WhatsInMyFridge.Models
         }
 
         public string Name { get; set; }
-        public string ingredients_string { get; set; }
         public string brand { get; set; }
         public string BarCode { get; set; }
 

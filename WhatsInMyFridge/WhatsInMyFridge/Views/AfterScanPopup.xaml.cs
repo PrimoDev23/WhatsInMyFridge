@@ -40,7 +40,6 @@ namespace WhatsInMyFridge.Views
         private void btnOK_Clicked(object sender, EventArgs e)
         {
             double parsed;
-            DateTime dt;
 
             if (double.TryParse(txtAmount.Text, out parsed))
             {

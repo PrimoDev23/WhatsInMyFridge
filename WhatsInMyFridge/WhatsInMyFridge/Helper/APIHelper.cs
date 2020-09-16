@@ -46,7 +46,6 @@ namespace WhatsInMyFridge.Helper
 
                 Food food = new Food()
                 {
-                    ingredients_string = ingredients != null ? ingredients.ToString() : "",
                     Name = name != null ? name.ToString() : "",
                     brand = brand != null ? brand.ToString() : "",
                     BarCode = Code

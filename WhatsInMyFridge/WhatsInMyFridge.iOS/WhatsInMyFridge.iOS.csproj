@@ -184,6 +184,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\settings_48dp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\swipe_used_black.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarWhatsInMyFridgeiOSHideInfoBar="True" />

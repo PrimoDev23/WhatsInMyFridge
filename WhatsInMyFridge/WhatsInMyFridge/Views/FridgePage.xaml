@@ -7,6 +7,7 @@
     xmlns:models="clr-namespace:WhatsInMyFridge.Models"
     xmlns:views="clr-namespace:WhatsInMyFridge.Views"
     xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    x:Name="CurrFridgePage"
     Title="What's in my fridge"
     x:DataType="vm:FridgeViewModel">
     <ContentPage.ToolbarItems>
@@ -43,15 +44,27 @@
         <AbsoluteLayout Grid.Row="1">
             <CollectionView
                 Grid.Row="1"
+                Margin="10"
                 x:DataType="vm:FridgeViewModel"
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding FilteredFoodList}"
                 SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
+                    <DataTemplate x:DataType="models:Food">
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem
+                                        Command="{Binding Path=BindingContext.usedCommand, Source={x:Reference CurrFridgePage}}"
+                                        CommandParameter="{Binding .}"
+                                        IconImageSource="swipe_used_black"
+                                        Text="Verwendet" />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
                             <Frame
-                                Margin="10"
                                 Padding="10"
                                 BackgroundColor="White"
                                 CornerRadius="20"
@@ -72,11 +85,7 @@
                                         WidthRequest="60" />
                                 </StackLayout>
                             </Frame>
-
-                            <controls:FridgeGrid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                            </controls:FridgeGrid.GestureRecognizers>
-                        </controls:FridgeGrid>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -96,7 +105,11 @@
             Grid.RowSpan="2"
             IsVisible="False" />
 
-
+        <views:UsedPopup
+            x:Name="usedPopup"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            IsVisible="False" />
 
     </Grid>
 
