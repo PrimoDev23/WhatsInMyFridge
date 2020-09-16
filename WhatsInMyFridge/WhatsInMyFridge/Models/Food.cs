@@ -27,7 +27,7 @@ namespace WhatsInMyFridge.Models
 
         public string combinedAmountName
         {
-            get { return $"{amount.ToString()}x {name}"; }
+            get { return $"{amount.ToString()} {(unit == "az" ? "x" : unit)} {name}"; }
         }
 
         public string name { get; set; }
@@ -66,4 +66,5 @@ namespace WhatsInMyFridge.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }

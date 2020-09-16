@@ -90,8 +90,42 @@ namespace WhatsInMyFridge.Views
                         double amount = tuple.Item1;
                         DateTime dt = tuple.Item2;
 
-                        food.amount += amount;
-                        food.unit = tuple.Item3;
+                        string newUnit = string.Empty;
+
+                        //Einheit verarbeiten
+                        switch (tuple.Item3)
+                        {
+                            case "Kilogramm":
+                                newUnit = "kg";
+                                break;
+                            case "Gramm":
+                                newUnit = "g";
+                                break;
+                            case "Liter":
+                                newUnit = "l";
+                                break;
+                            case "Mililiter":
+                                newUnit = "ml";
+                                break;
+                            case "Anzahl":
+                                newUnit = "az";
+                                break;
+                        }
+
+                        if(food.unit == "g" && newUnit == "kg" || food.unit == "ml" && newUnit == "l")
+                        {
+                            food.amount += (amount * 1000);
+                        }
+                        else if(food.unit == "kg" && newUnit == "g" || food.unit == "l" && newUnit == "ml")
+                        {
+                            food.amount += (amount / 1000);
+                        }
+                        else
+                        {
+                            food.amount += amount;
+                            food.unit = newUnit;
+                        }
+
 
                         for (int i = 0; i < tuple.Item1; i++)
                         {
