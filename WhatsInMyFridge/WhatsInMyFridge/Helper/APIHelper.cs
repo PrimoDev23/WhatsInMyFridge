@@ -122,6 +122,7 @@ namespace WhatsInMyFridge.Helper
                 JToken front_image = products["image_front_url"];
                 JToken brand = products["brands"];
                 JToken name = products["product_name"];
+                JToken quantity = products["quantity"];
 
                 Food food = new Food()
                 {
@@ -130,8 +131,23 @@ namespace WhatsInMyFridge.Helper
                     BarCode = Code
                 };
 
+                if (quantity != null)
+                {
+                    string[] split = quantity.ToString().Replace(",", ".").Split(' ');
+
+                    if (double.TryParse(split[0], out double parsed))
+                    {
+                        food.unit = split[1];
+                        food.amount = parsed;
+                    }
+                }
+                else
+                {
+                    food.unit = "x";
+                }
+
                 //YES sadly this is the only way to not throw any exception...
-                if(front_image != null)
+                if (front_image != null)
                 {
                     food.imageUrl = front_image.ToString();
                 }

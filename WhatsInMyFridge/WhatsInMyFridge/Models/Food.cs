@@ -17,7 +17,9 @@ namespace WhatsInMyFridge.Models
             get { return _amount; }
             set { _amount = value; OnPropertyChanged(null); }
         }
-        
+
+        public List<double> amount_list = new List<double>();
+
         private int _quantity = 0;
         public int quantity
         {
@@ -27,7 +29,7 @@ namespace WhatsInMyFridge.Models
 
         public string combinedAmountName
         {
-            get { return $"{amount.ToString()}x {name}"; }
+            get { return $"{amount.ToString()}{unit} {name}"; }
         }
 
         public string name { get; set; }
