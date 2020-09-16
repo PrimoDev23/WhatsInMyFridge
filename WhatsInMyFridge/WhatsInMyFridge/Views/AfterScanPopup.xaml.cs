@@ -46,9 +46,8 @@ namespace WhatsInMyFridge.Views
 
         private void btnOK_Clicked(object sender, EventArgs e)
         {
-            DateTime dt;
-
-            if (double.TryParse(txtAmount.Text, out double parsed) && pickerUnit.SelectedItem != null)
+            //TODO: Rwmove selecteditem check
+            if (double.TryParse(txtAmount.Text, out double parsed))
             {
                 complete?.TrySetResult((parsed, date.Date, pickerUnit.SelectedItem.ToString()));
             }

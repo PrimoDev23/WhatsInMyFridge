@@ -6,22 +6,11 @@
     xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
     xmlns:views="clr-namespace:WhatsInMyFridge.Views"
     android:TabbedPage.IsSmoothScrollEnabled="False"
+    android:TabbedPage.IsSwipePagingEnabled="False"
     android:TabbedPage.ToolbarPlacement="Bottom"
     Visual="Material">
-    <NavigationPage
-        x:Name="fridge"
-        Title="Kühlschrank"
-        IconImageSource="kitchen_48dp.png">
-        <x:Arguments>
-            <views:FridgePage />
-        </x:Arguments>
-    </NavigationPage>
-
-    <NavigationPage Title="Rezepte" IconImageSource="restaurant_48dp.png">
-        <x:Arguments>
-            <views:RecipeOverview />
-        </x:Arguments>
-    </NavigationPage>
+    <views:FridgePage x:Name="fridge" Title="Kühlschrank" IconImageSource="kitchen_48dp.png"/>
+    <views:RecipeOverview Title="Rezepte" IconImageSource="restaurant_48dp.png"/>
     <NavigationPage Title="Einstellungen" IconImageSource="settings_48dp.png" />
 
 </TabbedPage>

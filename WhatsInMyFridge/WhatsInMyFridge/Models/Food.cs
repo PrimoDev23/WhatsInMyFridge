@@ -32,7 +32,6 @@ namespace WhatsInMyFridge.Models
 
         public string name { get; set; }
         public string unit { get; set; }
-        public string ingredients_string { get; set; }
         public string brand { get; set; }
         public string BarCode { get; set; }
         public Color selectionColor { get; set; }

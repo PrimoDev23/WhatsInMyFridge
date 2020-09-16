@@ -148,6 +148,9 @@
     <AndroidResource Include="Resources\drawable\settings_48dp.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\swipe_used_black.png" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\drawable\add_48dp.png" />
   </ItemGroup>
   <ItemGroup>

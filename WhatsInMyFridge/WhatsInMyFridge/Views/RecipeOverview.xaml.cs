@@ -38,14 +38,6 @@ namespace WhatsInMyFridge.Views
             BindingContext = viewModel;
         }
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            if (sender is FridgeGrid grid)
-            {
-                Navigation.PushAsync(new FoodDetailPage(grid.FoodItem));
-            }
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         private async void fab_Clicked(object sender, EventArgs e)
         {

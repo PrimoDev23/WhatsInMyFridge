@@ -32,15 +32,9 @@ namespace WhatsInMyFridge.Views
 
             Task.Run(new Action(read));
 
-            BindingContext = viewModel;
-        }
+            viewModel.usedCommand = new Command<Food>(new Action<Food>(used));
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            if (sender is FridgeGrid grid)
-            {
-                Navigation.PushAsync(new FoodDetailPage(grid.FoodItem));
-            }
+            BindingContext = viewModel;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
@@ -126,10 +120,9 @@ namespace WhatsInMyFridge.Views
                             food.unit = newUnit;
                         }
 
-
                         for (int i = 0; i < tuple.Item1; i++)
                         {
-                            food.bestBeforeDate.Add(new BestBeforeDate(dt));
+                            food.bestBeforeDate.Add(new BestBeforeDate(dt, food.bestBeforeDate.Count));
                         }
 
                         if (!found)
@@ -169,6 +162,15 @@ namespace WhatsInMyFridge.Views
                 }
                 await Task.Run(new Action(run)).ConfigureAwait(false);
             }
+        }
+
+        private async void used(Food selected)
+        {
+            usedPopup.IsVisible = true;
+
+            await usedPopup.showPopup(selected);
+
+            usedPopup.IsVisible = false;
         }
     }
 }

@@ -28,7 +28,7 @@
     <EmbeddedResource Update="Views\AfterScanPopup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FoodDetailPage.xaml">
+    <EmbeddedResource Update="Views\UsedPopup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FridgePage.xaml">
@@ -47,5 +47,11 @@
 
   <ItemGroup>
     <Folder Include="Themes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\UsedPopup.xaml.cs">
+      <DependentUpon>UsedPopup.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

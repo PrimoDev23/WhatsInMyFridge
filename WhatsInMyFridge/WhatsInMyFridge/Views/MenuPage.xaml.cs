@@ -15,7 +15,7 @@ namespace WhatsInMyFridge.Views
         public MenuPage()
         {
             InitializeComponent();
-            VarContainer.fridgePage = (FridgePage)fridge.CurrentPage;
+            VarContainer.fridgePage = fridge;
         }
     }
 }
