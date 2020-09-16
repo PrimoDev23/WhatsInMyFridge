@@ -27,6 +27,7 @@ namespace WhatsInMyFridge.Views
             BindingContext = viewModel;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         public async Task showPopup(Food food)
         {
             viewModel.food = food;

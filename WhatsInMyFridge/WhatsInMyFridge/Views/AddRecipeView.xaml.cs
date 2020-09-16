@@ -13,10 +13,8 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddRecipeView : ContentView
     {
-
         private TaskCompletionSource<RecipeModel> complete;
-        private AddRecipeViewModel viewModel = new AddRecipeViewModel();
-
+        private readonly AddRecipeViewModel viewModel = new AddRecipeViewModel();
 
         public AddRecipeView()
         {
@@ -28,7 +26,7 @@ namespace WhatsInMyFridge.Views
         public async Task<RecipeModel> waitForFinish()
         {
             complete = new TaskCompletionSource<RecipeModel>();
-            RecipeModel retVal = await complete.Task;
+            RecipeModel retVal = await complete.Task.ConfigureAwait(false);
             return retVal;
         }
 
@@ -58,14 +56,7 @@ namespace WhatsInMyFridge.Views
 
         private void Entry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (validateInput())
-            {
-                btnOK.IsEnabled = true;
-            }
-            else
-            {
-                btnOK.IsEnabled = false;
-            }
+            btnOK.IsEnabled = validateInput();
         }
 
         private bool validateInput()
@@ -132,14 +123,7 @@ namespace WhatsInMyFridge.Views
                 edt_instruct.BackgroundColor = Color.White;
             }
 
-            if (notFilledBoxes == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return notFilledBoxes == 0;
         }
     }
 }

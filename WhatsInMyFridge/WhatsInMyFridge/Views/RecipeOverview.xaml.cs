@@ -33,8 +33,8 @@ namespace WhatsInMyFridge.Views
                 imageUrl = "https://www.boeschbodenspies.com/wp-content/uploads/2017/08/tomato.png",
                 isInFridge = true,
             };
-            debug.Add(tomate); 
-            
+            debug.Add(tomate);
+
             Food kartoffel = new Food()
             {
                 name = "Kartoffeln",
@@ -104,8 +104,8 @@ namespace WhatsInMyFridge.Views
             {
                 selectItemsPopUp.IsVisible = false;
             }
-        }        
-        
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         private async void addRecipe(object sender, EventArgs e)
         {
@@ -135,7 +135,6 @@ namespace WhatsInMyFridge.Views
                 addRecipeView.IsVisible = false;
             }
         }
-
 
         private async void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {

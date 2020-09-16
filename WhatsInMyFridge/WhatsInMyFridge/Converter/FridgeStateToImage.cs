@@ -17,7 +17,7 @@ namespace WhatsInMyFridge.Converter
                 return null;
             }
 
-            if((bool)value == true)
+            if((bool)value)
             {
                 return new SolidColorBrush(Color.Green);
             }
@@ -27,6 +27,7 @@ namespace WhatsInMyFridge.Converter
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("General", "RCS1079:Throwing of new NotImplementedException.", Justification = "<Ausstehend>")]
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

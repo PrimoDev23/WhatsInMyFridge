@@ -13,7 +13,7 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecipeDetailView : ContentPage
     {
-        RecipeDetailViewModel viewModel = new RecipeDetailViewModel(); 
+        private readonly RecipeDetailViewModel viewModel = new RecipeDetailViewModel();
 
         public RecipeDetailView(RecipeModel mainRecipe)
         {
@@ -21,7 +21,7 @@ namespace WhatsInMyFridge.Views
 
             viewModel.mainRecipe = mainRecipe;
 
-            mainCollection.HeightRequest = viewModel.mainRecipe.mainIngredients.Count * 30 + viewModel.mainRecipe.mainIngredients.Count * 2 * 5;
+            mainCollection.HeightRequest = (viewModel.mainRecipe.mainIngredients.Count * 30) + (viewModel.mainRecipe.mainIngredients.Count * 2 * 5);
 
             this.BindingContext = viewModel;
         }

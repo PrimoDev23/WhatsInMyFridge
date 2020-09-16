@@ -17,7 +17,6 @@ namespace WhatsInMyFridge.Helper
 {
     public static class APIHelper
     {
-
         private static readonly HttpClient client = new HttpClient();
 
         public static async Task<bool> addRecipeRequest(RecipeModel model)
@@ -31,35 +30,36 @@ namespace WhatsInMyFridge.Helper
 
                 string convertedRecipe = JsonConvert.SerializeObject(newRecipe);
 
-                var response = await client.PostAsync("https://whatsinmyfridge123.herokuapp.com/requests", new StringContent(convertedRecipe, Encoding.UTF8, "application/json"));
+                var response = await client.PostAsync("https://whatsinmyfridge123.herokuapp.com/requests", new StringContent(convertedRecipe, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
-                var responseString = await response.Content.ReadAsStringAsync();
+                var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
         }
 
-
         public static async Task<List<RecipeModel>> getRecipesFromAPI(ObservableCollection<Food> ingredients)
         {
-
-            if(ingredients.Count < 1)
+            if (ingredients.Count < 1)
             {
                 return null;
             }
 
-            List<RecipeModel> retVal = new List<RecipeModel>();
             string foodNames = string.Empty;
             //Zutatenliste erstellen
-            ingredients.ForEach(y => { foodNames += y.name + ","; });
+            for (int i = 0; i < ingredients.Count; i++)
+            {
+                foodNames += ingredients[i].name + ",";
+            }
+
             foodNames = foodNames.TrimEnd(',');
 
             string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/t=10/i={foodNames}";
-            
+
             string json;
 
             WebRequest request = WebRequest.Create(url);
@@ -71,18 +71,11 @@ namespace WhatsInMyFridge.Helper
                 }
             }
 
-            try
-            {
-                List<RecipeModel> avaiableRecipes = JsonConvert.DeserializeObject<List<RecipeModel>>(json);
+            List<RecipeModel> avaiableRecipes = JsonConvert.DeserializeObject<List<RecipeModel>>(json);
 
-                if (avaiableRecipes.Count > 0 )
-                {
-                    return avaiableRecipes;
-                }
-            }
-            catch(Exception ex)
+            if (avaiableRecipes.Count > 0)
             {
-                
+                return avaiableRecipes;
             }
 
             return null;
@@ -107,7 +100,7 @@ namespace WhatsInMyFridge.Helper
 
                 JObject obj = JObject.Parse(json);
 
-                if(obj["status_verbose"].ToString() == "product not found")
+                if (obj["status_verbose"].ToString() == "product not found")
                 {
                     return null;
                 }
@@ -150,14 +143,14 @@ namespace WhatsInMyFridge.Helper
                     food.imageUrl = front_image.ToString();
                 }
 
-                if(nutri_grade != null)
+                if (nutri_grade != null)
                 {
                     food.nutrition_img_url = $"https://static.openfoodfacts.org/images/misc/nutriscore-{nutri_grade.ToString()}.png";
                 }
 
                 return food;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

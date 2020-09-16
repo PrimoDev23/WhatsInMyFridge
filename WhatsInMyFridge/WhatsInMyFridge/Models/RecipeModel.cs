@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WhatsInMyFridge.Helper;
 using Xamarin.Forms;
 
 namespace WhatsInMyFridge.Models
@@ -14,23 +15,23 @@ namespace WhatsInMyFridge.Models
     {
         public string IngredientPlaceholder
         {
-            get { return $"{mainIngredients.Count(y => y.isInFridge)}/{mainIngredients.Count}"; }
+            get { return $"{(mainIngredients.CountInFridge()/mainIngredients.Count).ToString()}"; }
         }
 
         public string CookingTimePlaceholder
         {
-            get { return $"{cookingTime} min";  }
+            get { return $"{cookingTime.ToString()} min";  }
         }
 
         public string KilocaloriesPlaceholder
         {
-            get { return $"{kiloCalories} kcal";  }
+            get { return $"{kiloCalories.ToString()} kcal";  }
         }
 
         public string InstructionsPlaceholder
         {
-            get 
-            { 
+            get
+            {
                 if (instructions != null) {
                     string retVal = string.Empty;
                     for(int i = 0; i < instructions.Count; i++)
@@ -39,14 +40,12 @@ namespace WhatsInMyFridge.Models
                     }
                     return retVal;
                 }
-                else 
+                else
                 {
-                    return ""; 
-               
-                } 
+                    return "";
+                }
             }
         }
-
 
         public string recipeName { get; set; }
         public string shortDescription { get; set; }
@@ -54,10 +53,10 @@ namespace WhatsInMyFridge.Models
         public int kiloCalories { get; set; }
 
         private string _recipeImage { get; set; }
-        public string recipeImage 
-        { 
+        public string recipeImage
+        {
             get { return _recipeImage; }
-            set { _recipeImage = value; RecipeImageParsed = new UriImageSource().Uri = new Uri(value); } 
+            set { _recipeImage = value; RecipeImageParsed = new UriImageSource().Uri = new Uri(value); }
         }
 
         public ImageSource RecipeImageParsed { get; set; }
@@ -67,10 +66,5 @@ namespace WhatsInMyFridge.Models
         public List<string> instructions { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

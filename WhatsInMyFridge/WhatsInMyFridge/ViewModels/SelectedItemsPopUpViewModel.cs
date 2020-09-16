@@ -14,15 +14,13 @@ namespace WhatsInMyFridge.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-
         private ObservableCollection<Food> currentIngredients { get; set; } = new ObservableCollection<Food>();
 
         public ObservableCollection<Food> CurrentIngredients
         {
             get { return currentIngredients;  }
-            set 
-            { 
+            set
+            {
                 currentIngredients = value;
                 OnPropertyChanged();
             }
@@ -44,6 +42,5 @@ namespace WhatsInMyFridge.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

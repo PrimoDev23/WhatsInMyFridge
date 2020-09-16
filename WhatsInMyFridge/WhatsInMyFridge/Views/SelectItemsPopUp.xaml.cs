@@ -18,18 +18,17 @@ namespace WhatsInMyFridge.Views
 
         private TaskCompletionSource<ObservableCollection<Food>> complete;
 
-
         public SelectItemsPopUp()
         {
             InitializeComponent();
             this.BindingContext = viewModel;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         public async Task<ObservableCollection<Food>> waitForFinish()
         {
             complete = new TaskCompletionSource<ObservableCollection<Food>>();
-            ObservableCollection<Food> retVal = await complete.Task;
-            return retVal;
+            return await complete.Task;
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e)
@@ -41,7 +40,5 @@ namespace WhatsInMyFridge.Views
         {
             complete?.TrySetResult(new ObservableCollection<Food>(viewModel.SelectedIngredients.Cast<Food>().ToList()));
         }
-
-
     }
 }

@@ -36,7 +36,6 @@ namespace WhatsInMyFridge.ViewModels
                 OnPropertyChanged();
             }
         }
-        
 
         private ObservableCollection<RecipeModel> recipeList { get; set; } = new ObservableCollection<RecipeModel>();
         public ObservableCollection<RecipeModel> RecipeList
@@ -51,7 +50,6 @@ namespace WhatsInMyFridge.ViewModels
                 OnPropertyChanged();
             }
         }
-        
 
         private ObservableCollection<RecipeModel> filteredRecipeList { get; set; } = new ObservableCollection<RecipeModel>();
         public ObservableCollection<RecipeModel> FilteredRecipeList
@@ -71,6 +69,5 @@ namespace WhatsInMyFridge.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

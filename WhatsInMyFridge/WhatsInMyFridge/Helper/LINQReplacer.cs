@@ -44,5 +44,18 @@ namespace WhatsInMyFridge.Helper
                 }
             }
         }
+
+        public static int CountInFridge(this ObservableCollection<Food> items)
+        {
+            int amount = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].isInFridge)
+                {
+                    amount++;
+                }
+            }
+            return amount;
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace WhatsInMyFridge.Views
     {
         private TaskCompletionSource<ValueTuple<int, DateTime, int>> complete;
 
-        DateTime default_dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+        private readonly DateTime default_dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
         public AfterScanPopup()
         {
@@ -23,6 +23,7 @@ namespace WhatsInMyFridge.Views
             date.Date = default_dt;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         public async Task<ValueTuple<int, DateTime, int>> waitForFinish(Food food, bool unit_can_be_used)
         {
             pickerUnit.SelectedIndex = 0;

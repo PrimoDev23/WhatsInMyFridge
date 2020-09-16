@@ -8,6 +8,5 @@ namespace WhatsInMyFridge.ViewModels
 {
     public class AddRecipeViewModel
     {
-        
     }
 }
