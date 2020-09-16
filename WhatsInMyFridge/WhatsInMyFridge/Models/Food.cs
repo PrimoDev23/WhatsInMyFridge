@@ -31,6 +31,7 @@ namespace WhatsInMyFridge.Models
         public string unit { get; set; }
         public string brand { get; set; }
         public string BarCode { get; set; }
+        public bool isInFridge { get; set; }
         public Color selectionColor { get; set; }
 
         public DateTime expirationDate { get; set; }

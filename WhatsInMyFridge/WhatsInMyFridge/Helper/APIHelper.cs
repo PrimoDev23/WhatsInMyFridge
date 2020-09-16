@@ -58,10 +58,7 @@ namespace WhatsInMyFridge.Helper
             ingredients.ForEach(y => { foodNames += y.name + ","; });
             foodNames = foodNames.TrimEnd(',');
 
-            string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/{foodNames}";
-            
-            //TODO: remove
-            //string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/Eier,Milch,Pflaumen";
+            string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/t=10/i={foodNames}";
             
             string json;
 
@@ -83,7 +80,7 @@ namespace WhatsInMyFridge.Helper
                     return avaiableRecipes;
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 
             }

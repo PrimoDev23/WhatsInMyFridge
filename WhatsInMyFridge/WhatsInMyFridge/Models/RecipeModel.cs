@@ -14,7 +14,7 @@ namespace WhatsInMyFridge.Models
     {
         public string IngredientPlaceholder
         {
-            get { return $"3/{mainIngredients.Count}"; }
+            get { return $"{mainIngredients.Count(y => y.isInFridge)}/{mainIngredients.Count}"; }
         }
 
         public string CookingTimePlaceholder
@@ -25,6 +25,26 @@ namespace WhatsInMyFridge.Models
         public string KilocaloriesPlaceholder
         {
             get { return $"{kiloCalories} kcal";  }
+        }
+
+        public string InstructionsPlaceholder
+        {
+            get 
+            { 
+                if (instructions != null) {
+                    string retVal = string.Empty;
+                    for(int i = 0; i < instructions.Count; i++)
+                    {
+                        retVal += instructions[i] + "\n";
+                    }
+                    return retVal;
+                }
+                else 
+                {
+                    return ""; 
+               
+                } 
+            }
         }
 
 
