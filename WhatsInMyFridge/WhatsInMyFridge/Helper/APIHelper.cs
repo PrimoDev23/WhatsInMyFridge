@@ -126,6 +126,7 @@ namespace WhatsInMyFridge.Helper
 
                 Food food = new Food()
                 {
+                    addingType = AddingType.Scanned,
                     name = name != null ? name.ToString() : "",
                     brand = brand != null ? brand.ToString() : "",
                     BarCode = Code

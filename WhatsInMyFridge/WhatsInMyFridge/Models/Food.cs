@@ -11,6 +11,8 @@ namespace WhatsInMyFridge.Models
 {
     public class Food : INotifyPropertyChanged
     {
+        public AddingType addingType;
+
         private double _amount = 0;
         public double amount
         {
@@ -19,13 +21,6 @@ namespace WhatsInMyFridge.Models
         }
 
         public List<double> amount_list = new List<double>();
-
-        private int _quantity = 0;
-        public int quantity
-        {
-            get { return _quantity; }
-            set { _quantity = value; OnPropertyChanged(null); }
-        }
 
         public string combinedAmountName
         {
@@ -68,4 +63,9 @@ namespace WhatsInMyFridge.Models
         }
     }
 
+    public enum AddingType
+    {
+        Scanned,
+        Manually
+    }
 }
