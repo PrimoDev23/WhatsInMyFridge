@@ -83,6 +83,7 @@ namespace WhatsInMyFridge.Views
                             return;
                         }
 
+<<<<<<< HEAD
                         DateTime dt = new DateTime(tuple.Item2.Year, tuple.Item2.Month, tuple.Item2.Day, 23, 59, 59);
 
                         //unit selected
@@ -108,6 +109,48 @@ namespace WhatsInMyFridge.Views
                             }
                         }
                         else //amount selected
+=======
+                        double amount = tuple.Item1;
+                        DateTime dt = tuple.Item2;
+
+                        string newUnit = string.Empty;
+
+                        //Einheit verarbeiten
+                        switch (tuple.Item3)
+                        {
+                            case "Kilogramm":
+                                newUnit = "kg";
+                                break;
+                            case "Gramm":
+                                newUnit = "g";
+                                break;
+                            case "Liter":
+                                newUnit = "l";
+                                break;
+                            case "Mililiter":
+                                newUnit = "ml";
+                                break;
+                            case "Anzahl":
+                                newUnit = "az";
+                                break;
+                        }
+
+                        if(food.unit == "g" && newUnit == "kg" || food.unit == "ml" && newUnit == "l")
+                        {
+                            food.amount += (amount * 1000);
+                        }
+                        else if(food.unit == "kg" && newUnit == "g" || food.unit == "l" && newUnit == "ml")
+                        {
+                            food.amount += (amount / 1000);
+                        }
+                        else
+                        {
+                            food.amount += amount;
+                            food.unit = newUnit;
+                        }
+
+                        for (int i = 0; i < tuple.Item1; i++)
+>>>>>>> b77caa3a4085ce050a4591f6164c485a0e11941b
                         {
                             if (found)
                             {

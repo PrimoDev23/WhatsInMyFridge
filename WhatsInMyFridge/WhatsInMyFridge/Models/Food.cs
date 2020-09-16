@@ -67,4 +67,5 @@ namespace WhatsInMyFridge.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }
