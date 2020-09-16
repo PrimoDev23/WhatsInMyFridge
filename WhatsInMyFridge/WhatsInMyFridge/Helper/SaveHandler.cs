@@ -18,7 +18,7 @@ namespace WhatsInMyFridge.Helper
                 xml.Serialize(fs, new ObservableCollection<Food>(items));
             }
         }
-
+        
         public static ObservableCollection<Food> readFood()
         {
             if (!File.Exists(VarContainer.food_path))

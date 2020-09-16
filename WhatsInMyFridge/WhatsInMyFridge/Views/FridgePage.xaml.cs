@@ -80,7 +80,7 @@ namespace WhatsInMyFridge.Views
 
                         afterScanPopup.IsVisible = true;
 
-                        ValueTuple<double, DateTime> tuple = await afterScanPopup.waitForFinish();
+                        ValueTuple<double, DateTime, string> tuple = await afterScanPopup.waitForFinish();
 
                         if (tuple.Item1 == 0 || tuple.Item2 == DateTime.MinValue)
                         {
@@ -90,9 +90,10 @@ namespace WhatsInMyFridge.Views
                         double amount = tuple.Item1;
                         DateTime dt = tuple.Item2;
 
-                        food.Amount += amount;
+                        food.amount += amount;
+                        food.unit = tuple.Item3;
 
-                        for (int i = 0; i < amount; i++)
+                        for (int i = 0; i < tuple.Item1; i++)
                         {
                             food.bestBeforeDate.Add(new BestBeforeDate(dt));
                         }

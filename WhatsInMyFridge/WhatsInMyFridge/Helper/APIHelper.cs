@@ -1,23 +1,68 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WhatsInMyFridge.Models;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
+using ZXing.OneD;
 
 namespace WhatsInMyFridge.Helper
 {
     public static class APIHelper
     {
 
-        public static async Task<RecipeModel> getRecipesFromAPI(ObservableCollection<Food> ingredients)
+        private static readonly HttpClient client = new HttpClient();
+
+        public static async Task<bool> addRecipeRequest(RecipeModel model)
+        {
+            try
+            {
+                RecipeXML newRecipe = new RecipeXML()
+                {
+                    recipe = model,
+                };
+
+                string convertedRecipe = JsonConvert.SerializeObject(newRecipe);
+
+                var response = await client.PostAsync("https://whatsinmyfridge123.herokuapp.com/requests", new StringContent(convertedRecipe, Encoding.UTF8, "application/json"));
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
+
+        public static async Task<List<RecipeModel>> getRecipesFromAPI(ObservableCollection<Food> ingredients)
         {
 
-            string url = $"https://whatsinmyfridge123.herokuapp.com/recipes";
+            if(ingredients.Count < 1)
+            {
+                return null;
+            }
+
+            List<RecipeModel> retVal = new List<RecipeModel>();
+            string foodNames = string.Empty;
+            //Zutatenliste erstellen
+            ingredients.ForEach(y => { foodNames += y.name + ","; });
+            foodNames = foodNames.TrimEnd(',');
+
+            string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/{foodNames}";
+            
+            //TODO: remove
+            //string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/Eier,Milch,Pflaumen";
+            
             string json;
 
             WebRequest request = WebRequest.Create(url);
@@ -31,15 +76,17 @@ namespace WhatsInMyFridge.Helper
 
             try
             {
-                JArray obj = JArray.Parse(json);
+                List<RecipeModel> avaiableRecipes = JsonConvert.DeserializeObject<List<RecipeModel>>(json);
+
+                if (avaiableRecipes.Count > 0 )
+                {
+                    return avaiableRecipes;
+                }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-
+                
             }
-
-
-
 
             return null;
         }
@@ -79,7 +126,7 @@ namespace WhatsInMyFridge.Helper
                 Food food = new Food()
                 {
                     ingredients_string = ingredients != null ? ingredients.ToString() : "",
-                    Name = name != null ? name.ToString() : "",
+                    name = name != null ? name.ToString() : "",
                     brand = brand != null ? brand.ToString() : "",
                     BarCode = Code
                 };
@@ -87,7 +134,7 @@ namespace WhatsInMyFridge.Helper
                 //YES sadly this is the only way to not throw any exception...
                 if(front_image != null)
                 {
-                    food.main_img_url = front_image.ToString();
+                    food.imageUrl = front_image.ToString();
                 }
 
                 if(nutri_grade != null)

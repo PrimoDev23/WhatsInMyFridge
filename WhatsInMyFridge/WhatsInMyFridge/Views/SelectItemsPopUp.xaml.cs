@@ -18,8 +18,6 @@ namespace WhatsInMyFridge.Views
 
         private TaskCompletionSource<ObservableCollection<Food>> complete;
 
-        private readonly object valid_lock = new object();
-        private bool valid = false;
 
         public SelectItemsPopUp()
         {

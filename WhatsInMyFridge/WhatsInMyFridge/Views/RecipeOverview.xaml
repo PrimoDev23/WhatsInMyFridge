@@ -154,7 +154,7 @@
                                             Grid.Column="0"
                                             HorizontalOptions="Center"
                                             HorizontalTextAlignment="Center"
-                                            Text="{Binding RecipeName}"
+                                            Text="{Binding recipeName}"
                                             TextColor="Black"
                                             VerticalTextAlignment="Center" />
 
@@ -162,7 +162,7 @@
                                             Grid.RowSpan="4"
                                             Grid.Column="1"
                                             HeightRequest="80"
-                                            Source="{Binding RecipeImage}"
+                                            Source="{Binding RecipeImageParsed}"
                                             WidthRequest="80" />
 
                                         <Label
@@ -172,7 +172,7 @@
                                             FontSize="8"
                                             HorizontalOptions="Start"
                                             HorizontalTextAlignment="Start"
-                                            Text="{Binding ShortDescription}"
+                                            Text="{Binding shortDescription}"
                                             TextColor="Black"
                                             VerticalTextAlignment="Start" />
 
@@ -275,6 +275,15 @@
                 AbsoluteLayout.LayoutBounds=".95,.95,50,50"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 BackgroundColor="{StaticResource colorAccent}"
+                Clicked="addRecipe"
+                CornerRadius="50"
+                Source="add_48dp.png" />
+
+            <ImageButton
+                x:Name="fab2"
+                AbsoluteLayout.LayoutBounds=".95,.75,50,50"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="{StaticResource colorAccent}"
                 Clicked="fab_Clicked"
                 CornerRadius="50"
                 Source="functions_48dp.png" />
@@ -282,6 +291,13 @@
 
         <views:SelectItemsPopUp
             x:Name="selectItemsPopUp"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            IsVisible="False" />
+
+
+        <views:AddRecipeView
+            x:Name="addRecipeView"
             Grid.Row="0"
             Grid.RowSpan="3"
             IsVisible="False" />

@@ -11,29 +11,39 @@ namespace WhatsInMyFridge.Models
 {
     public class Food : INotifyPropertyChanged
     {
-        private double _Amount = 0;
-        public double Amount
+        private double _amount = 0;
+        public double amount
         {
-            get { return _Amount; }
-            set { _Amount = value; OnPropertyChanged(null); }
+            get { return _amount; }
+            set { _amount = value; OnPropertyChanged(null); }
+        }
+        
+        private int _quantity = 0;
+        public int quantity
+        {
+            get { return _quantity; }
+            set { _quantity = value; OnPropertyChanged(null); }
         }
 
         public string combinedAmountName
         {
-            get { return $"{Amount.ToString()}x {Name}"; }
+            get { return $"{amount.ToString()}x {name}"; }
         }
 
-        public string Name { get; set; }
+        public string name { get; set; }
+        public string unit { get; set; }
         public string ingredients_string { get; set; }
         public string brand { get; set; }
         public string BarCode { get; set; }
         public Color selectionColor { get; set; }
 
-        private string _main_img_url;
-        public string main_img_url
+        public DateTime expirationDate { get; set; }
+
+        private string _imageUrl;
+        public string imageUrl
         {
-            get { return _main_img_url; }
-            set { _main_img_url = value; main_img = ImageSource.FromUri(new Uri(value)); }
+            get { return _imageUrl; }
+            set { _imageUrl = value; main_img = ImageSource.FromUri(new Uri(value)); }
         }
         [XmlIgnore]
         public ImageSource main_img { get; set; }

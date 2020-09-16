@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="WhatsInMyFridge.Views.AddRecipeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:WhatsInMyFridge.Controls"
+    xmlns:models="clr-namespace:WhatsInMyFridge.Models"
+    xmlns:views="clr-namespace:WhatsInMyFridge.Views"
+    xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    x:DataType="vm:AddRecipeViewModel">
+
+    <Grid BackgroundColor="{StaticResource colorBlurBack}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="500" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Frame
+            Grid.Row="1"
+            Grid.Column="1"
+            CornerRadius="20"
+            HasShadow="True">
+
+            <StackLayout Orientation="Vertical">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*                                        " />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        Text="Rezeptdaten" />
+
+                    <Entry
+                        x:Name="txt_recipeName"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Placeholder="Rezeptname"
+                        TextChanged="Entry_TextChanged" />
+                    <Entry
+                        x:Name="txt_cookingTime"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Keyboard="Numeric"
+                        Placeholder="Kochzeit in min"
+                        TextChanged="Entry_TextChanged" />
+
+                    <Entry
+                        x:Name="txt_kiloCalories"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Keyboard="Numeric"
+                        Placeholder="Kalorien in kcal"
+                        TextChanged="Entry_TextChanged" />
+                    <Entry
+                        x:Name="txt_recipeUrl"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Placeholder="Rezeptbild"
+                        TextChanged="Entry_TextChanged" />
+
+                    <Entry
+                        x:Name="txt_desc"
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Placeholder="Beschreibung"
+                        TextChanged="Entry_TextChanged" />
+                    <Editor
+                        x:Name="edt_instruct"
+                        Grid.Row="4"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        IsTabStop="True"
+                        Placeholder="Instruktionen"
+                        TextChanged="Entry_TextChanged" />
+
+                </Grid>
+
+
+                <StackLayout Orientation="Horizontal">
+                    <Button
+                        x:Name="btnCancel"
+                        BackgroundColor="Transparent"
+                        Clicked="btnCancel_Clicked"
+                        HorizontalOptions="End"
+                        Text="Abbrechen"
+                        TextColor="Black"
+                        Visual="Default" />
+                    <Button
+                        x:Name="btnOK"
+                        BackgroundColor="Transparent"
+                        Clicked="btnOK_Clicked"
+                        HorizontalOptions="End"
+                        Text="OK"
+                        TextColor="Black"
+                        Visual="Default" />
+                </StackLayout>
+
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentView>

@@ -27,7 +27,7 @@ namespace WhatsInMyFridge.Helper
             for(int i = 0;i < items.Count; i++)
             {
                 Food food = items[i];
-                if(food.Name.ToLower().Contains(lower)){
+                if(food.name.ToLower().Contains(lower)){
                     yield return food;
                 }
             }
@@ -39,7 +39,7 @@ namespace WhatsInMyFridge.Helper
             for(int i = 0;i < items.Count; i++)
             {
                 RecipeModel recipe = items[i];
-                if(recipe.RecipeName.ToLower().Contains(lower)){
+                if(recipe.recipeName.ToLower().Contains(lower)){
                     yield return recipe;
                 }
             }

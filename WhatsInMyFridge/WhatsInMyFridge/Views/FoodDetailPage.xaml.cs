@@ -21,7 +21,7 @@ namespace WhatsInMyFridge.Views
 
             viewModel.item = food;
 
-            Title = food.Name;
+            Title = food.name;
 
             BindingContext = viewModel;
         }

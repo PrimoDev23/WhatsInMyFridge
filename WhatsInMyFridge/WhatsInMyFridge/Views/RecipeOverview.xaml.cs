@@ -9,6 +9,7 @@ using WhatsInMyFridge.Helper;
 using WhatsInMyFridge.Models;
 using WhatsInMyFridge.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace WhatsInMyFridge.Views
@@ -24,12 +25,12 @@ namespace WhatsInMyFridge.Views
 
             viewModel.RecipeList.Add(new RecipeModel()
             {
-                ShortDescription = "Chicken tikka masala, oft CTM abgekürzt, ist ein häufig in indischen Restaurants in Europa und Nordamerika angebotenes Currygericht aus gegrillten marinierten Hähnchenfleischstücken in einer würzigen Tomatensauce, das eigentlich der englischen Küche zuzurechnen ist.",
-                RecipeName = "Chicken Tikka Masala",
-                CookingTime = 10,
-                Kilocalories = 780,
-                MainIngredients = new ObservableCollection<Food>(viewModel.foodList),
-                RecipeImage = new UriImageSource() { Uri = new Uri("https://pinchofyum.com/wp-content/uploads/Chicken-Tikka-Masala-Square.jpg") },
+                shortDescription = "Chicken tikka masala, oft CTM abgekürzt, ist ein häufig in indischen Restaurants in Europa und Nordamerika angebotenes Currygericht aus gegrillten marinierten Hähnchenfleischstücken in einer würzigen Tomatensauce, das eigentlich der englischen Küche zuzurechnen ist.",
+                recipeName = "Chicken Tikka Masala",
+                cookingTime = 10,
+                kiloCalories = 780,
+                mainIngredients = new ObservableCollection<Food>(viewModel.foodList),
+                RecipeImageParsed = new UriImageSource() { Uri = new Uri("https://pinchofyum.com/wp-content/uploads/Chicken-Tikka-Masala-Square.jpg") },
             });
             viewModel.FilteredRecipeList = new ObservableCollection<RecipeModel>(viewModel.RecipeList);
 
@@ -59,23 +60,58 @@ namespace WhatsInMyFridge.Views
 
                 if (selectedFood != null)
                 {
-                    //API Fetch
+                    //API Rezepe abrufen zu den ausgewählten Zutaten
                     viewModel.SelectedFood = selectedFood;
+                    List<RecipeModel> avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood);
 
-                    APIHelper.getRecipesFromAPI(selectedFood);
-
-
-
+                    if(avaiableRecipes != null)
+                    {
+                        viewModel.RecipeList = new ObservableCollection<RecipeModel>(avaiableRecipes);
+                    }
+                    else
+                    {
+                        await DisplayAlert("Achtung", "Zu den gewählten Zutaten wurde kein Rezept gefunden! Wir empfehlen Lieferando.", "OK");
+                    }
                 }
 
                 txtSearch_TextChanged(null, null);
-                //SaveHandler.saveFood(viewModel.foodList);
             }
             finally
             {
                 selectItemsPopUp.IsVisible = false;
             }
+        }        
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
+        private async void addRecipe(object sender, EventArgs e)
+        {
+            try
+            {
+                addRecipeView.IsVisible = true;
+
+                RecipeModel newRecipe = await addRecipeView.waitForFinish();
+
+                if(newRecipe != null)
+                {
+                    newRecipe.mainIngredients = viewModel.SelectedFood;
+                    newRecipe.mainIngredients.ForEach(y => { y.main_img = null; y.nutrition_img_source = null; });
+                    bool success = await APIHelper.addRecipeRequest(newRecipe);
+                    if (success)
+                    {
+                        await DisplayAlert("Meldung", "Das Rezept wurde an die Administration gesendet.", "OK");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Meldung", "Rezept konnte nicht versendet werden / wurde abgelehnt.", "OK");
+                    }
+                }
+            }
+            finally
+            {
+                addRecipeView.IsVisible = false;
+            }
         }
+
 
         private async void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
