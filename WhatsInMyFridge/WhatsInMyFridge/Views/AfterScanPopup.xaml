@@ -7,7 +7,7 @@
     <Grid BackgroundColor="{StaticResource colorBlurBack}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="280" />
+            <RowDefinition Height="380" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -21,15 +21,16 @@
             CornerRadius="20"
             HasShadow="True">
             <StackLayout Orientation="Vertical">
-                <Entry
-                    x:Name="txtAmount"
-                    Keyboard="Numeric"
-                    Placeholder="Anzahl"
-                    TextChanged="txtAmount_TextChanged" />
-                <Label x:Name="AmountValid" TextColor="Red" />
                 <Label Text="Mindesthaltbarkeitsdatum" />
                 <DatePicker x:Name="date" />
                 <Label x:Name="DateValid" TextColor="Red" />
+                <Entry
+                    x:Name="txtAmount"
+                    Keyboard="Numeric"
+                    Placeholder="Menge"
+                    TextChanged="txtAmount_TextChanged" />
+                <Label x:Name="AmountValid" TextColor="Red" />
+                <Picker x:Name="pickerUnit" Unfocused="pickerUnit_Unfocused" Title="Mengeneinheit" />
                 <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
                     <Button
                         x:Name="btnCancel"

@@ -9,7 +9,7 @@
     android:TabbedPage.IsSwipePagingEnabled="False"
     android:TabbedPage.ToolbarPlacement="Bottom"
     Visual="Material">
-    <views:FridgePage Title="Kühlschrank" IconImageSource="kitchen_48dp.png"/>
+    <views:FridgePage x:Name="fridge" Title="Kühlschrank" IconImageSource="kitchen_48dp.png"/>
     <views:RecipeOverview Title="Rezepte" IconImageSource="restaurant_48dp.png"/>
     <NavigationPage Title="Einstellungen" IconImageSource="settings_48dp.png" />
 

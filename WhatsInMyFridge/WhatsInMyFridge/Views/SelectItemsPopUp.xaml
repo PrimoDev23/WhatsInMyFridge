@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="WhatsInMyFridge.Views.SelectItemsPopUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:WhatsInMyFridge.Controls"
+    xmlns:models="clr-namespace:WhatsInMyFridge.Models"
+    xmlns:views="clr-namespace:WhatsInMyFridge.Views"
+    xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
+    x:DataType="vm:SelectedItemsPopUpViewModel">
+
+    <Grid BackgroundColor="{StaticResource colorBlurBack}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="500" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Frame
+            Grid.Row="1"
+            Grid.Column="1"
+            CornerRadius="20"
+            HasShadow="True">
+            <StackLayout Orientation="Vertical">
+                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Vertical">
+                    <Label Text="Wählen sie die Zutaten, die sie verwenden wollen!" />
+                    <CollectionView
+                        x:Name="collectionView"
+                        x:DataType="vm:SelectedItemsPopUpViewModel"
+                        ItemSizingStrategy="MeasureAllItems"
+                        ItemsSource="{Binding CurrentIngredients, Mode=TwoWay}"
+                        SelectedItems="{Binding SelectedIngredients, Mode=TwoWay}"
+                        SelectionMode="Multiple">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+
+
+
+                                <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
+                                    <Frame
+                                        Margin="2"
+                                        Padding="10"
+                                        Background="White"
+                                        CornerRadius="10"
+                                        HasShadow="True">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60" />
+                                                <ColumnDefinition Width="AUTO" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image
+                                                Grid.Column="0"
+                                                HeightRequest="60"
+                                                Source="{Binding main_img}" />
+                                            <Label
+                                                Grid.Column="1"
+                                                Margin="5,0,0,0"
+                                                Text="{Binding combinedAmountName}"
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                            <Image
+                                                Grid.Column="2"
+                                                HeightRequest="30"
+                                                HorizontalOptions="End"
+                                                Source="{Binding nutrition_img_source}" />
+                                        </Grid>
+                                    </Frame>
+
+
+                                </controls:FridgeGrid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Button
+                        x:Name="btnCancel"
+                        BackgroundColor="Transparent"
+                        Clicked="btnCancel_Clicked"
+                        HorizontalOptions="End"
+                        Text="Abbrechen"
+                        TextColor="Black"
+                        Visual="Default" />
+                    <Button
+                        x:Name="btnOK"
+                        BackgroundColor="Transparent"
+                        Clicked="btnOK_Clicked"
+                        HorizontalOptions="End"
+                        Text="OK"
+                        TextColor="Black"
+                        Visual="Default" />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentView>

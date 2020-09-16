@@ -40,7 +40,7 @@ namespace WhatsInMyFridge.Views
             for(int i = 0;i < viewModel.bestBeforeDates.Count; i++)
             {
                 food.bestBeforeDate.Remove(viewModel.bestBeforeDates[i]);
-                food.Amount--;
+                food.amount--;
             }
         }
 

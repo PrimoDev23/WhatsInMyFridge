@@ -15,6 +15,7 @@
     </ContentPage.ToolbarItems>
 
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="130" />
             <RowDefinition Height="*" />
@@ -92,11 +93,12 @@
 
             <ImageButton
                 x:Name="fab"
-                AbsoluteLayout.LayoutBounds=".95,.95,80,80"
+                AbsoluteLayout.LayoutBounds=".95,.95,50,50"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 BackgroundColor="{StaticResource colorAccent}"
                 Clicked="fab_Clicked"
-                CornerRadius="50" />
+                CornerRadius="50"
+                Source="add_48dp.png" />
         </AbsoluteLayout>
 
         <views:AfterScanPopup

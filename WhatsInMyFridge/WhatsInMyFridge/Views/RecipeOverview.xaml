@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:WhatsInMyFridge.Controls"
     xmlns:models="clr-namespace:WhatsInMyFridge.Models"
+    xmlns:views="clr-namespace:WhatsInMyFridge.Views"
     xmlns:vm="clr-namespace:WhatsInMyFridge.ViewModels"
     Title="What's in my fridge"
     x:DataType="vm:RecipeOverviewModel">
@@ -49,10 +50,12 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Entry
+                            x:Name="txtSearch"
                             Grid.Column="0"
                             BackgroundColor="#77000000"
                             HorizontalOptions="FillAndExpand"
                             Placeholder="Suchtext"
+                            TextChanged="txtSearch_TextChanged"
                             TextColor="White"
                             WidthRequest="250" />
                     </Grid>
@@ -81,7 +84,7 @@
                         x:DataType="vm:RecipeOverviewModel"
                         ItemSizingStrategy="MeasureAllItems"
                         ItemsLayout="VerticalGrid, 8"
-                        ItemsSource="{Binding foodList}"
+                        ItemsSource="{Binding SelectedFood}"
                         SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -105,137 +108,191 @@
 
         </StackLayout>
 
-        <CollectionView
-            Grid.Row="2"
-            x:DataType="vm:RecipeOverviewModel"
-            ItemSizingStrategy="MeasureAllItems"
-            ItemsSource="{Binding RecipeList}"
-            SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <controls:FridgeGrid x:DataType="models:RecipeModel" RecipeItem="{Binding .}">
+        <AbsoluteLayout Grid.Row="2">
+            <CollectionView
+                Grid.Row="2"
+                x:DataType="vm:RecipeOverviewModel"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsSource="{Binding FilteredRecipeList}"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:FridgeGrid x:DataType="models:RecipeModel" RecipeItem="{Binding .}">
 
-                        <Frame
-                            Margin="5"
-                            Padding="1"
-                            BackgroundColor="Black"
-                            CornerRadius="12"
-                            HasShadow="true">
                             <Frame
-                                Margin="2"
-                                Padding="10"
-                                Background="#FF03a9f4"
-                                CornerRadius="10"
-                                HasShadow="True">
+                                Margin="5"
+                                Padding="1"
+                                BackgroundColor="Black"
+                                CornerRadius="12"
+                                HasShadow="true">
+                                <Frame
+                                    Margin="2"
+                                    Padding="10"
+                                    Background="White"
+                                    CornerRadius="10"
+                                    HasShadow="True">
 
-                                <Grid>
+                                    <Grid>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="35" />
-                                        <RowDefinition Height="85" />
-                                        <RowDefinition Height="28" />
-                                    </Grid.RowDefinitions>
-
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center"
-                                        Text="{Binding RecipeName}"
-                                        TextColor="Black"
-                                        VerticalTextAlignment="Center" />
-
-                                    <Image
-                                        Grid.RowSpan="4"
-                                        Grid.Column="1"
-                                        HeightRequest="80"
-                                        Source="{Binding RecipeImage}"
-                                        WidthRequest="80" />
-
-                                    <Label
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        FontAttributes="Italic"
-                                        FontSize="8"
-                                        HorizontalOptions="Start"
-                                        HorizontalTextAlignment="Start"
-                                        Text="{Binding ShortDescription}"
-                                        TextColor="Black"
-                                        VerticalTextAlignment="Start" />
-
-                                    <Grid
-                                        Grid.Row="2"
-                                        Grid.RowSpan="2"
-                                        Grid.Column="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="28" />
+                                            <RowDefinition Height="35" />
+                                            <RowDefinition Height="85" />
                                             <RowDefinition Height="28" />
                                         </Grid.RowDefinitions>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="28" />
-                                            <ColumnDefinition Width="28" />
-                                            <ColumnDefinition Width="28" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Path
+                                        <Label
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Data="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"
-                                            Fill="White" />
-                                        <Path
-                                            Grid.Row="0"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding recipeName}"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Image
+                                            Grid.RowSpan="4"
                                             Grid.Column="1"
-                                            Data="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"
-                                            Fill="White" />
-                                        <Path
-                                            Grid.Row="0"
-                                            Grid.Column="2"
-                                            Data="M19.48,12.35c-1.57-4.08-7.16-4.3-5.81-10.23c0.1-0.44-0.37-0.78-0.75-0.55C9.29,3.71,6.68,8,8.87,13.62 c0.18,0.46-0.36,0.89-0.75,0.59c-1.81-1.37-2-3.34-1.84-4.75c0.06-0.52-0.62-0.77-0.91-0.34C4.69,10.16,4,11.84,4,14.37 c0.38,5.6,5.11,7.32,6.81,7.54c2.43,0.31,5.06-0.14,6.95-1.87C19.84,18.11,20.6,15.03,19.48,12.35z M10.2,17.38 c1.44-0.35,2.18-1.39,2.38-2.31c0.33-1.43-0.96-2.83-0.09-5.09c0.33,1.87,3.27,3.04,3.27,5.08C15.84,17.59,13.1,19.76,10.2,17.38z"
-                                            Fill="White" />
+                                            HeightRequest="80"
+                                            Source="{Binding RecipeImageParsed}"
+                                            WidthRequest="80" />
 
                                         <Label
                                             Grid.Row="1"
                                             Grid.Column="0"
-                                            FontSize="10"
-                                            HorizontalOptions="Center"
-                                            Text="{Binding CookingTimePlaceholder}"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            FontSize="10"
-                                            HorizontalOptions="Center"
-                                            Text="{Binding IngredientPlaceholder}"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Row="1"
-                                            Grid.Column="2"
-                                            FontSize="10"
-                                            HorizontalOptions="Center"
-                                            Text="{Binding KilocaloriesPlaceholder}"
-                                            VerticalOptions="Center" />
+                                            FontAttributes="Italic"
+                                            FontSize="8"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            Text="{Binding shortDescription}"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Start" />
+
+                                        <Grid
+                                            Grid.Row="2"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0">
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="20" />
+                                            </Grid.RowDefinitions>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="45" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="45" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackLayout
+                                                Grid.RowSpan="2"
+                                                Grid.Column="0"
+                                                Orientation="Vertical">
+                                                <Path
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Data="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"
+                                                    Fill="#FF03a9f4"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    FontSize="10"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding CookingTimePlaceholder}"
+                                                    VerticalOptions="Center" />
+                                            </StackLayout>
+
+                                            <StackLayout
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Orientation="Vertical">
+
+                                                <Path
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Data="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"
+                                                    Fill="#FF03a9f4"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center" />
+
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    FontSize="10"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding IngredientPlaceholder}"
+                                                    VerticalOptions="Center" />
+                                            </StackLayout>
+
+
+                                            <StackLayout
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
+                                                Orientation="Vertical">
+                                                <Path
+                                                    Grid.Row="0"
+                                                    Grid.Column="2"
+                                                    Data="M19.48,12.35c-1.57-4.08-7.16-4.3-5.81-10.23c0.1-0.44-0.37-0.78-0.75-0.55C9.29,3.71,6.68,8,8.87,13.62 c0.18,0.46-0.36,0.89-0.75,0.59c-1.81-1.37-2-3.34-1.84-4.75c0.06-0.52-0.62-0.77-0.91-0.34C4.69,10.16,4,11.84,4,14.37 c0.38,5.6,5.11,7.32,6.81,7.54c2.43,0.31,5.06-0.14,6.95-1.87C19.84,18.11,20.6,15.03,19.48,12.35z M10.2,17.38 c1.44-0.35,2.18-1.39,2.38-2.31c0.33-1.43-0.96-2.83-0.09-5.09c0.33,1.87,3.27,3.04,3.27,5.08C15.84,17.59,13.1,19.76,10.2,17.38z"
+                                                    Fill="#FF03a9f4"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center" />
+
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="2"
+                                                    FontSize="10"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding KilocaloriesPlaceholder}"
+                                                    VerticalOptions="Center" />
+                                            </StackLayout>
+
+
+
+                                        </Grid>
 
                                     </Grid>
-
-                                </Grid>
+                                </Frame>
                             </Frame>
-                        </Frame>
+                        </controls:FridgeGrid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-                        <!--<controls:FridgeGrid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                        </controls:FridgeGrid.GestureRecognizers>-->
-                    </controls:FridgeGrid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <ImageButton
+                x:Name="fab"
+                AbsoluteLayout.LayoutBounds=".95,.95,50,50"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="{StaticResource colorAccent}"
+                Clicked="addRecipe"
+                CornerRadius="50"
+                Source="add_48dp.png" />
 
+            <ImageButton
+                x:Name="fab2"
+                AbsoluteLayout.LayoutBounds=".95,.75,50,50"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="{StaticResource colorAccent}"
+                Clicked="fab_Clicked"
+                CornerRadius="50"
+                Source="functions_48dp.png" />
+        </AbsoluteLayout>
+
+        <views:SelectItemsPopUp
+            x:Name="selectItemsPopUp"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            IsVisible="False" />
+
+
+        <views:AddRecipeView
+            x:Name="addRecipeView"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            IsVisible="False" />
 
     </Grid>
 </ContentPage>

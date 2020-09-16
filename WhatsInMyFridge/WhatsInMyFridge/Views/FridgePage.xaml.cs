@@ -18,7 +18,7 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FridgePage : ContentPage
     {
-        public FridgeViewModel viewModel { get; } = new FridgeViewModel();
+        public readonly FridgeViewModel viewModel = new FridgeViewModel();
 
         public FridgePage()
         {
@@ -74,19 +74,19 @@ namespace WhatsInMyFridge.Views
 
                         afterScanPopup.IsVisible = true;
 
-                        ValueTuple<double, DateTime> tuple = await afterScanPopup.waitForFinish();
+                        ValueTuple<double, DateTime, string> tuple = await afterScanPopup.waitForFinish();
 
                         if (tuple.Item1 == 0 || tuple.Item2 == DateTime.MinValue)
                         {
                             return;
                         }
 
-                        double amount = tuple.Item1;
                         DateTime dt = tuple.Item2;
 
-                        food.Amount += amount;
+                        food.amount += tuple.Item1;
+                        food.unit = tuple.Item3;
 
-                        for (int i = 0; i < amount; i++)
+                        for (int i = 0; i < tuple.Item1; i++)
                         {
                             food.bestBeforeDate.Add(new BestBeforeDate(dt, food.bestBeforeDate.Count));
                         }

@@ -27,8 +27,20 @@ namespace WhatsInMyFridge.Helper
             for(int i = 0;i < items.Count; i++)
             {
                 Food food = items[i];
-                if(food.Name.ToLower().Contains(lower)){
+                if(food.name.ToLower().Contains(lower)){
                     yield return food;
+                }
+            }
+        }
+
+        public static IEnumerable<RecipeModel> getRecipesBayName(this ObservableCollection<RecipeModel> items, string name)
+        {
+            string lower = name.ToLower();
+            for(int i = 0;i < items.Count; i++)
+            {
+                RecipeModel recipe = items[i];
+                if(recipe.recipeName.ToLower().Contains(lower)){
+                    yield return recipe;
                 }
             }
         }

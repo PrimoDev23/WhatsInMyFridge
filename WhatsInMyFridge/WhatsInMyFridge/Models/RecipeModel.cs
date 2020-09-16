@@ -14,27 +14,37 @@ namespace WhatsInMyFridge.Models
     {
         public string IngredientPlaceholder
         {
-            get { return $"3/{MainIngredients.Count}"; }
+            get { return $"3/{mainIngredients.Count}"; }
         }
 
         public string CookingTimePlaceholder
         {
-            get { return $"{CookingTime}\nmin";  }
+            get { return $"{cookingTime} min";  }
         }
 
         public string KilocaloriesPlaceholder
         {
-            get { return $"{Kilocalories}\nkcal";  }
+            get { return $"{kiloCalories} kcal";  }
         }
 
 
-        public string RecipeName { get; set; }
-        public string ShortDescription { get; set; }
-        public int CookingTime { get; set; }
-        public int Kilocalories { get; set; }
-        public ImageSource RecipeImage { get; set; }
+        public string recipeName { get; set; }
+        public string shortDescription { get; set; }
+        public int cookingTime { get; set; }
+        public int kiloCalories { get; set; }
 
-        public ObservableCollection<Food> MainIngredients { get; set; } = new ObservableCollection<Food>();
+        private string _recipeImage { get; set; }
+        public string recipeImage 
+        { 
+            get { return _recipeImage; }
+            set { _recipeImage = value; RecipeImageParsed = new UriImageSource().Uri = new Uri(value); } 
+        }
+
+        public ImageSource RecipeImageParsed { get; set; }
+
+        public ObservableCollection<Food> mainIngredients { get; set; } = new ObservableCollection<Food>();
+
+        public List<string> instructions { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
