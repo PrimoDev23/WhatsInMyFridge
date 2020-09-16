@@ -37,11 +37,33 @@ namespace WhatsInMyFridge.Views
 
             await viewModel.complete.Task;
 
-            for(int i = 0;i < viewModel.bestBeforeDates.Count; i++)
+            if (food.bestBeforeDate.Count == viewModel.bestBeforeDates.Count)
             {
-                food.bestBeforeDate.Remove(viewModel.bestBeforeDates[i]);
-                food.amount--;
+                food.amount = 0;
+                food.bestBeforeDate.Clear();
+                VarContainer.fridgePage.viewModel.foodList.Remove(food);
             }
+            else
+            {
+                int index;
+
+                for (int i = 0; i < viewModel.bestBeforeDates.Count; i++)
+                {
+                    index = viewModel.bestBeforeDates[i].Index;
+
+                    food.amount -= food.amount_list[index];
+
+                    food.bestBeforeDate.Remove(viewModel.bestBeforeDates[i]);
+
+                    for (int ii = index; ii < food.bestBeforeDate.Count; ii++)
+                    {
+                        food.bestBeforeDate[ii].Index--;
+                    }
+                }
+            }
+            VarContainer.fridgePage.txtSearch_TextChanged(null, null);
+
+            SaveHandler.saveFood(VarContainer.fridgePage.viewModel.foodList);
         }
 
         private void OK_Clicked()

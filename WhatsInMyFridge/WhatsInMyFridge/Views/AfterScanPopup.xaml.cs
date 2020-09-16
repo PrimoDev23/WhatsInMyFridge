@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WhatsInMyFridge.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,44 +12,60 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AfterScanPopup : ContentView
     {
-        private TaskCompletionSource<ValueTuple<double, DateTime, string>> complete;
+        private TaskCompletionSource<ValueTuple<int, DateTime, int>> complete;
 
         DateTime default_dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-
-        static List<string> UnitOfMeasure = new List<string>() { "Anzahl", "Liter", "Gramm", "Kilogramm", "Mililiter", "Tonne" };
 
         public AfterScanPopup()
         {
             InitializeComponent();
 
             date.Date = default_dt;
-
-            pickerUnit.ItemsSource = UnitOfMeasure;
-
-            pickerUnit.SelectedIndex = 0;
         }
 
-        public async Task<ValueTuple<double, DateTime, string>> waitForFinish()
+        public async Task<ValueTuple<int, DateTime, int>> waitForFinish(Food food, bool unit_can_be_used)
         {
-            complete = new TaskCompletionSource<(double, DateTime, string)>();
-            ValueTuple<double, DateTime, string> tuple = await complete.Task;
-            txtAmount.Text = "";
-            pickerUnit.SelectedItem = null;
+            pickerUnit.SelectedIndex = 0;
+
+            //If food is null its not already in the list
+            if (food != null)
+            {
+                pickerUnit.IsEnabled = false;
+
+                if (food.unit == "x")
+                {
+                    pickerUnit.SelectedIndex = 1;
+                }
+            }
+            else
+            {
+                if (!unit_can_be_used)
+                {
+                    pickerUnit.SelectedIndex = 1;
+                    pickerUnit.IsEnabled = false;
+                }
+            }
+
+            complete = new TaskCompletionSource<(int, DateTime, int)>();
+            ValueTuple<int, DateTime, int> tuple = await complete.Task;
+
+            pickerUnit.IsEnabled = true;
+            pickerUnit.SelectedIndex = 0;
+            txtAmount.Text = "1";
             date.Date = default_dt;
             return tuple;
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e)
         {
-            complete?.TrySetResult((-1, DateTime.MinValue, null));
+            complete?.TrySetResult((-1, DateTime.MinValue, -1));
         }
 
         private void btnOK_Clicked(object sender, EventArgs e)
         {
-            //TODO: Rwmove selecteditem check
-            if (double.TryParse(txtAmount.Text, out double parsed))
+            if (int.TryParse(txtAmount.Text, out int parsed))
             {
-                complete?.TrySetResult((parsed, date.Date, pickerUnit.SelectedItem.ToString()));
+                complete?.TrySetResult((parsed, date.Date, pickerUnit.SelectedIndex));
             }
         }
 
@@ -61,21 +77,13 @@ namespace WhatsInMyFridge.Views
                 return;
             }
 
-            if (!double.TryParse(txtAmount.Text, out _))
+            if (!int.TryParse(txtAmount.Text, out _))
             {
                 AmountValid.Text = "Die eingegebene Anzahl ist ungültig!";
             }
             else
             {
                 AmountValid.Text = null;
-            }
-        }
-
-        private void pickerUnit_Unfocused(object sender, FocusEventArgs e)
-        {
-            if(pickerUnit.SelectedItem != null)
-            {
-                txtAmount.Placeholder = $"Menge ({pickerUnit.SelectedItem})";
             }
         }
     }

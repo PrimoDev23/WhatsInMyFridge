@@ -19,7 +19,8 @@ namespace WhatsInMyFridge.Models
         {
             get
             {
-                if (DateTime.Compare(bestBeforeDate, DateTime.Now) < 0)
+                DateTime default_dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+                if (DateTime.Compare(bestBeforeDate, default_dt) < 0)
                 {
                     return Color.Red;
                 }

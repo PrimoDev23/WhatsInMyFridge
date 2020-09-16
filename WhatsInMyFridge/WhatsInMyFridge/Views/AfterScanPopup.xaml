@@ -28,9 +28,18 @@
                     x:Name="txtAmount"
                     Keyboard="Numeric"
                     Placeholder="Menge"
+                    Text="1"
                     TextChanged="txtAmount_TextChanged" />
                 <Label x:Name="AmountValid" TextColor="Red" />
-                <Picker x:Name="pickerUnit" Unfocused="pickerUnit_Unfocused" Title="Mengeneinheit" />
+                <Picker
+                    x:Name="pickerUnit"
+                    Title="Mengeneinheit"
+                    SelectedIndex="0">
+                    <Picker.Items>
+                        <x:String>Einheit benutzen</x:String>
+                        <x:String>Anzahl benutzen</x:String>
+                    </Picker.Items>
+                </Picker>
                 <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
                     <Button
                         x:Name="btnCancel"

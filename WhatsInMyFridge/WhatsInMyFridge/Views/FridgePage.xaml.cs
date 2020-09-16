@@ -74,13 +74,42 @@ namespace WhatsInMyFridge.Views
 
                         afterScanPopup.IsVisible = true;
 
-                        ValueTuple<double, DateTime, string> tuple = await afterScanPopup.waitForFinish();
+                        //Unit != "x" just says -> quantity found with API
+                        ValueTuple<int, DateTime, int> tuple = await afterScanPopup.waitForFinish(found ? food : null, food.unit != "x");
 
-                        if (tuple.Item1 == 0 || tuple.Item2 == DateTime.MinValue)
+                        //Cancel pressed
+                        if (tuple.Item1 == -1 && tuple.Item2 == DateTime.MinValue)
                         {
                             return;
                         }
 
+<<<<<<< HEAD
+                        DateTime dt = new DateTime(tuple.Item2.Year, tuple.Item2.Month, tuple.Item2.Day, 23, 59, 59);
+
+                        //unit selected
+                        if (tuple.Item3 == 0)
+                        {
+                            //Amount for one item (like 350g)
+                            double amount;
+                            if (found)
+                            {
+                                amount = food.amount / food.amount_list.Count;
+                                food.amount += tuple.Item1 * amount;
+                            }
+                            else
+                            {
+                                amount = food.amount;
+                                food.amount = tuple.Item1 * food.amount;
+                            }
+
+                            for (int i = 0; i < tuple.Item1; i++)
+                            {
+                                food.bestBeforeDate.Add(new BestBeforeDate(dt, food.bestBeforeDate.Count));
+                                food.amount_list.Add(amount);
+                            }
+                        }
+                        else //amount selected
+=======
                         double amount = tuple.Item1;
                         DateTime dt = tuple.Item2;
 
@@ -121,8 +150,23 @@ namespace WhatsInMyFridge.Views
                         }
 
                         for (int i = 0; i < tuple.Item1; i++)
+>>>>>>> b77caa3a4085ce050a4591f6164c485a0e11941b
                         {
-                            food.bestBeforeDate.Add(new BestBeforeDate(dt, food.bestBeforeDate.Count));
+                            if (found)
+                            {
+                                food.amount += tuple.Item1;
+                            }
+                            else
+                            {
+                                food.amount = tuple.Item1;
+                                food.unit = "x";
+                            }
+
+                            for (int i = 0; i < tuple.Item1; i++)
+                            {
+                                food.bestBeforeDate.Add(new BestBeforeDate(dt, food.bestBeforeDate.Count));
+                                food.amount_list.Add(1);
+                            }
                         }
 
                         if (!found)
@@ -144,7 +188,7 @@ namespace WhatsInMyFridge.Views
             }
         }
 
-        private async void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        public async void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!(txtSearch.Text?.Length > 0))
             {
