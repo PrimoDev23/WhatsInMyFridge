@@ -9,9 +9,9 @@
     x:DataType="vm:UsedPopupViewModel">
     <Grid BackgroundColor="{StaticResource colorBlurBack}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
@@ -30,74 +30,71 @@
                     HorizontalOptions="CenterAndExpand"
                     Orientation="Vertical">
                     <Label
+                        x:Name="lblName"
                         FontSize="Large"
                         HorizontalOptions="CenterAndExpand"
                         HorizontalTextAlignment="Center"
                         Text="{Binding food.name}" />
                     <Label
+                        x:Name="lblBrand"
                         FontAttributes="Italic"
                         FontSize="Medium"
                         HorizontalOptions="CenterAndExpand"
                         HorizontalTextAlignment="Center"
-                        Text="{Binding food.brand, StringFormat='({0})'}" />
+                        Text="{Binding food.brand}" />
                 </StackLayout>
-                <CollectionView
-                    Margin="10"
-                    ItemSizingStrategy="MeasureAllItems"
-                    ItemsSource="{Binding food.bestBeforeDate}"
-                    SelectionMode="None">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-                            HorizontalItemSpacing="10"
-                            Orientation="Vertical"
-                            Span="2"
-                            VerticalItemSpacing="10" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:BestBeforeDate">
-                            <Frame
-                                BorderColor="{StaticResource colorAccent}"
-                                CornerRadius="20"
-                                HasShadow="False">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="AUTO" />
-                                        <RowDefinition Height="AUTO" />
-                                    </Grid.RowDefinitions>
-                                    <Image
-                                        Grid.Row="0"
-                                        HeightRequest="60"
-                                        Source="{Binding Path=BindingContext.food.main_img, Source={x:Reference usedDialog}}"
-                                        WidthRequest="60" />
-                                    <Label
-                                        Grid.Row="1"
-                                        HorizontalOptions="CenterAndExpand"
-                                        HorizontalTextAlignment="Center"
-                                        Text="{Binding formattedDate}"
-                                        TextColor="{Binding dateOver}"
-                                        VerticalOptions="EndAndExpand" />
-                                    <Path
-                                        Grid.Row="0"
-                                        Margin="-15"
-                                        Data="{Binding checked_path_data}"
-                                        Fill="Black" />
-                                </Grid>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.selectCommand, Source={x:Reference usedDialog}}" CommandParameter="{Binding .}" />
-                                </Frame.GestureRecognizers>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <Button
-                    Margin="0"
-                    Padding="0"
-                    BackgroundColor="Transparent"
-                    Command="{Binding OKCommand}"
-                    HorizontalOptions="CenterAndExpand"
-                    Text="Verwenden / Löschen"
-                    VerticalOptions="EndAndExpand"
-                    Visual="Default" />
+                <Grid x:Name="stackUnit">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="AUTO" />
+                    </Grid.ColumnDefinitions>
+                    <Entry
+                        x:Name="txtAmount"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="10,10,0,0"
+                        Keyboard="Numeric"
+                        Placeholder="Verwendet"
+                        TextChanged="txtAmount_TextChanged" />
+                    <Label
+                        x:Name="lblUnit"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="2,10,10,0"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="EndAndExpand"
+                        HorizontalTextAlignment="End"
+                        VerticalOptions="EndAndExpand"
+                        VerticalTextAlignment="End" />
+                    <Label
+                        x:Name="confirmAmount"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="10,0,10,0"
+                        Text=""
+                        TextColor="Red" />
+                </Grid>
+                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                    <Button
+                        Margin="0,-20,0,0"
+                        BackgroundColor="Transparent"
+                        Command="{Binding cancelCommand}"
+                        Text="Abbrechen"
+                        Visual="Default" />
+                    <Button
+                        x:Name="btnOK"
+                        Margin="0,-20,0,0"
+                        BackgroundColor="Transparent"
+                        Command="{Binding OKCommand}"
+                        Text="Ändern"
+                        Visual="Default" />
+                </StackLayout>
             </StackLayout>
         </Frame>
     </Grid>

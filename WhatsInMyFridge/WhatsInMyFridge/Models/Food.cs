@@ -20,7 +20,9 @@ namespace WhatsInMyFridge.Models
             set { _amount = value; OnPropertyChanged(null); }
         }
 
-        public List<double> amount_list = new List<double>();
+        public double single_amount { get; set; }
+
+        //public List<double> amount_list = new List<double>();
 
         public string combinedAmountName
         {
@@ -64,8 +66,6 @@ namespace WhatsInMyFridge.Models
         }
         [XmlIgnore]
         public ImageSource nutrition_img_source { get; set; }
-
-        public ObservableCollection<BestBeforeDate> bestBeforeDate { get; set; } = new ObservableCollection<BestBeforeDate>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

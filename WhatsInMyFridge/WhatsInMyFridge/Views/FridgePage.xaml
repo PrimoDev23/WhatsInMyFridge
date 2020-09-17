@@ -62,7 +62,7 @@
                                         Command="{Binding Path=BindingContext.usedCommand, Source={x:Reference CurrFridgePage}}"
                                         CommandParameter="{Binding .}"
                                         IconImageSource="swipe_used_black"
-                                        Text="Verwendet" />
+                                        Text="Menge anpassen" />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
                             <Frame
