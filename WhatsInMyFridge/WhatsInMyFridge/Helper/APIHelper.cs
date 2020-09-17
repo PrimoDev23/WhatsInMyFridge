@@ -115,6 +115,12 @@ namespace WhatsInMyFridge.Helper
                 JToken name = products["product_name"];
                 JToken quantity = products["quantity"];
 
+                if(front_image == null)
+                {
+                    //try alternative image
+                    front_image = products["selected_images"]["front"]["display"]["de"];
+                }
+
                 Food food = new Food()
                 {
                     addingType = AddingType.Scanned,
