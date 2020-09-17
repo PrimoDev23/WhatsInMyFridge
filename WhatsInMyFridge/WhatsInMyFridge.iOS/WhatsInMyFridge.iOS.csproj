@@ -193,6 +193,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\functions_48dp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tune_48dp.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarWhatsInMyFridgeiOSHideInfoBar="True" />

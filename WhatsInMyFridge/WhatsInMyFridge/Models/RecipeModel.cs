@@ -15,7 +15,7 @@ namespace WhatsInMyFridge.Models
     {
         public string IngredientPlaceholder
         {
-            get { return $"{(mainIngredients.CountInFridge()/mainIngredients.Count).ToString()}"; }
+            get { return $"{mainIngredients.CountInFridge().ToString()}/{mainIngredients.Count.ToString()}"; }
         }
 
         public string CookingTimePlaceholder

@@ -14,7 +14,7 @@ namespace WhatsInMyFridge.Converter
         {
             if(value == null)
             {
-                return null;
+                return new SolidColorBrush(Color.IndianRed);
             }
 
             if((bool)value)

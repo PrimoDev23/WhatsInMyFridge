@@ -63,7 +63,7 @@ namespace WhatsInMyFridge.Helper
             int amount = 0;
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].isInFridge)
+                if (items[i].isInFridge == true)
                 {
                     amount++;
                 }
