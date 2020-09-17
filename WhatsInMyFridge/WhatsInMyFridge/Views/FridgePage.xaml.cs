@@ -75,36 +75,25 @@ namespace WhatsInMyFridge.Views
                         afterScanPopup.IsVisible = true;
 
                         //Unit != "x" just says -> quantity found with API
-                        ValueTuple<int, DateTime, int> tuple = await afterScanPopup.waitForFinish(found ? food : null, food.unit != "x");
+                        ValueTuple<int, int> tuple = await afterScanPopup.waitForFinish(found ? food : null, food.unit != "x");
 
                         //Cancel pressed
-                        if (tuple.Item1 == -1 && tuple.Item2 == DateTime.MinValue)
+                        if (tuple.Item1 == -1)
                         {
                             return;
                         }
 
-                        DateTime dt = new DateTime(tuple.Item2.Year, tuple.Item2.Month, tuple.Item2.Day, 23, 59, 59);
-
                         //unit selected
-                        if (tuple.Item3 == 0)
+                        if (tuple.Item2 == 0)
                         {
                             //Amount for one item (like 350g)
-                            double amount;
                             if (found)
                             {
-                                amount = food.amount / food.amount_list.Count;
-                                food.amount += tuple.Item1 * amount;
+                                food.amount += tuple.Item1 * food.single_amount;
                             }
                             else
                             {
-                                amount = food.amount;
-                                food.amount = tuple.Item1 * food.amount;
-                            }
-
-                            for (int i = 0; i < tuple.Item1; i++)
-                            {
-                                food.bestBeforeDate.Add(new BestBeforeDate(dt, food.bestBeforeDate.Count));
-                                food.amount_list.Add(amount);
+                                food.amount = tuple.Item1 * food.single_amount;
                             }
                         }
                         else //amount selected
@@ -115,14 +104,9 @@ namespace WhatsInMyFridge.Views
                             }
                             else
                             {
+                                food.single_amount = 1;
                                 food.amount = tuple.Item1;
                                 food.unit = "x";
-                            }
-
-                            for (int i = 0; i < tuple.Item1; i++)
-                            {
-                                food.bestBeforeDate.Add(new BestBeforeDate(dt, food.bestBeforeDate.Count));
-                                food.amount_list.Add(1);
                             }
                         }
 
@@ -134,6 +118,13 @@ namespace WhatsInMyFridge.Views
                         break;
                     case "Manuell eingeben":
                         addItemView.IsVisible = true;
+                        Food new_food = await addItemView.showDialog();
+                        addItemView.IsVisible = false;
+
+                        if(new_food != null)
+                        {
+                            viewModel.foodList.Add(new_food);
+                        }
                         break;
                 }
 

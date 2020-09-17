@@ -12,21 +12,19 @@ namespace WhatsInMyFridge.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AfterScanPopup : ContentView
     {
-        private TaskCompletionSource<ValueTuple<int, DateTime, int>> complete;
-
-        private readonly DateTime default_dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+        private TaskCompletionSource<ValueTuple<int, int>> complete;
 
         public AfterScanPopup()
         {
             InitializeComponent();
-
-            date.Date = default_dt;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
-        public async Task<ValueTuple<int, DateTime, int>> waitForFinish(Food food, bool unit_can_be_used)
+        public async Task<ValueTuple<int, int>> waitForFinish(Food food, bool unit_can_be_used)
         {
+            pickerUnit.IsEnabled = true;
             pickerUnit.SelectedIndex = 0;
+            txtAmount.Text = "1";
 
             //If food is null its not already in the list
             if (food != null)
@@ -47,44 +45,41 @@ namespace WhatsInMyFridge.Views
                 }
             }
 
-            complete = new TaskCompletionSource<(int, DateTime, int)>();
-            ValueTuple<int, DateTime, int> tuple = await complete.Task;
-
-            pickerUnit.IsEnabled = true;
-            pickerUnit.SelectedIndex = 0;
-            txtAmount.Text = "1";
-            date.Date = default_dt;
-            return tuple;
+            complete = new TaskCompletionSource<(int, int)>();
+            return await complete.Task;
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e)
         {
-            complete?.TrySetResult((-1, DateTime.MinValue, -1));
+            complete?.TrySetResult((-1, -1));
         }
 
         private void btnOK_Clicked(object sender, EventArgs e)
         {
             if (int.TryParse(txtAmount.Text, out int parsed))
             {
-                complete?.TrySetResult((parsed, date.Date, pickerUnit.SelectedIndex));
+                complete?.TrySetResult((parsed, pickerUnit.SelectedIndex));
             }
         }
 
         private void txtAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!(txtAmount.Text?.Length > 0))
+            if (int.TryParse(txtAmount.Text, out int amount))
             {
-                AmountValid.Text = null;
-                return;
-            }
-
-            if (!int.TryParse(txtAmount.Text, out _))
-            {
-                AmountValid.Text = "Die eingegebene Anzahl ist ungültig!";
+                if (amount == 0)
+                {
+                    AmountValid.Text = "Die eingegebene Anzahl ist ungültig!";
+                    btnOK.IsEnabled = false;
+                }
+                else {
+                    AmountValid.Text = null;
+                    btnOK.IsEnabled = true;
+                }
             }
             else
             {
-                AmountValid.Text = null;
+                AmountValid.Text = "Die eingegebene Anzahl ist ungültig!";
+                btnOK.IsEnabled = false;
             }
         }
     }

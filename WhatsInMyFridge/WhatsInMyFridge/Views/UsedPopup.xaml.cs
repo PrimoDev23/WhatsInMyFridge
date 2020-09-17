@@ -22,7 +22,7 @@ namespace WhatsInMyFridge.Views
             InitializeComponent();
 
             viewModel.OKCommand = new Command(new Action(OK_Clicked));
-            viewModel.selectCommand = new Command<BestBeforeDate>(new Action<BestBeforeDate>(selected));
+            viewModel.cancelCommand = new Command(new Action(Cancel_Clicked));
 
             BindingContext = viewModel;
         }
@@ -34,55 +34,61 @@ namespace WhatsInMyFridge.Views
 
             viewModel.complete = new TaskCompletionSource<bool>();
 
-            viewModel.bestBeforeDates.Clear();
-
-            await viewModel.complete.Task;
-
-            if (food.bestBeforeDate.Count == viewModel.bestBeforeDates.Count)
+            if (food.brand?.Length > 0)
             {
-                food.amount = 0;
-                food.bestBeforeDate.Clear();
-                VarContainer.fridgePage.viewModel.foodList.Remove(food);
+                lblBrand.Text = food.brand;
             }
             else
             {
-                int index;
-
-                for (int i = 0; i < viewModel.bestBeforeDates.Count; i++)
-                {
-                    index = viewModel.bestBeforeDates[i].Index;
-
-                    food.amount -= food.amount_list[index];
-
-                    food.bestBeforeDate.Remove(viewModel.bestBeforeDates[i]);
-
-                    for (int ii = index; ii < food.bestBeforeDate.Count; ii++)
-                    {
-                        food.bestBeforeDate[ii].Index--;
-                    }
-                }
+                lblBrand.IsVisible = false;
             }
-            VarContainer.fridgePage.txtSearch_TextChanged(null, null);
+            lblName.Text = food.name;
+            lblUnit.Text = food.unit;
+            txtAmount.Text = food.amount.ToString();
 
-            SaveHandler.saveFood(VarContainer.fridgePage.viewModel.foodList);
+            bool finish = await viewModel.complete.Task;
+
+            if (finish)
+            {
+                VarContainer.fridgePage.txtSearch_TextChanged(null, null);
+                SaveHandler.saveFood(VarContainer.fridgePage.viewModel.foodList);
+            }
         }
 
         private void OK_Clicked()
         {
-            viewModel.complete?.TrySetResult(true);
-        }
-
-        private void selected(BestBeforeDate bbd)
-        {
-            if (viewModel.bestBeforeDates.Contains(bbd))
+            if (double.TryParse(txtAmount.Text, out double amount) && amount <= viewModel.food.amount)
             {
-                viewModel.bestBeforeDates.Remove(bbd);
-                bbd.checked_path_data = (PathGeometry)VarContainer.pathConverter.ConvertFromInvariantString("M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z");
+                if (amount == viewModel.food.amount)
+                {
+                    VarContainer.fridgePage.viewModel.foodList.Remove(viewModel.food);
+                }
+                viewModel.food.amount -= amount;
             }
             else
             {
-                bbd.checked_path_data = (PathGeometry)VarContainer.pathConverter.ConvertFromInvariantString("M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z");
-                viewModel.bestBeforeDates.Add(bbd);
+                return;
+            }
+
+            viewModel.complete?.TrySetResult(true);
+        }
+
+        private void Cancel_Clicked()
+        {
+            viewModel.complete?.TrySetResult(false);
+        }
+
+        private void txtAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (double.TryParse(txtAmount.Text, out double amount) && amount <= viewModel.food.amount)
+            {
+                confirmAmount.Text = null;
+                btnOK.IsEnabled = true;
+            }
+            else
+            {
+                confirmAmount.Text = "Geben Sie eine gültige Menge ein... Diese darf nicht größer als die vorherige Menge sein!";
+                btnOK.IsEnabled = false;
             }
         }
     }

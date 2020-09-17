@@ -24,9 +24,9 @@ namespace WhatsInMyFridge.ViewModels
         public TaskCompletionSource<bool> complete;
 
         public Command OKCommand { get; set; }
-        public Command<BestBeforeDate> selectCommand { get; set; }
+        public Command cancelCommand { get; set; }
 
-        public List<BestBeforeDate> bestBeforeDates = new List<BestBeforeDate>();
+        public int select_count;
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

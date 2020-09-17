@@ -7,7 +7,7 @@
     <Grid BackgroundColor="{StaticResource colorBlurBack}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="380" />
+            <RowDefinition Height="240" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -21,9 +21,6 @@
             CornerRadius="20"
             HasShadow="True">
             <StackLayout Orientation="Vertical">
-                <Label Text="Mindesthaltbarkeitsdatum" />
-                <DatePicker x:Name="date" />
-                <Label x:Name="DateValid" TextColor="Red" />
                 <Entry
                     x:Name="txtAmount"
                     Keyboard="Numeric"
@@ -45,7 +42,6 @@
                         x:Name="btnCancel"
                         BackgroundColor="Transparent"
                         Clicked="btnCancel_Clicked"
-                        HorizontalOptions="End"
                         Text="Abbrechen"
                         TextColor="Black"
                         Visual="Default" />
@@ -53,7 +49,6 @@
                         x:Name="btnOK"
                         BackgroundColor="Transparent"
                         Clicked="btnOK_Clicked"
-                        HorizontalOptions="End"
                         Text="OK"
                         TextColor="Black"
                         Visual="Default" />

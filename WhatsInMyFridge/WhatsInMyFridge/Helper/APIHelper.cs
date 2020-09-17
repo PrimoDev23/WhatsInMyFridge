@@ -133,7 +133,7 @@ namespace WhatsInMyFridge.Helper
                 {
                     addingType = AddingType.Scanned,
                     name = name != null ? name.ToString() : "",
-                    brand = brand != null ? brand.ToString() : "",
+                    brand = brand != null ? $"({brand.ToString()})" : "",
                     BarCode = Code
                 };
 
@@ -141,13 +141,13 @@ namespace WhatsInMyFridge.Helper
                 {
                     string[] split = new string[2];
 
-                    split[0] = Regex.Match(quantity.ToString(), "[0-9,.]").Value;
+                    split[0] = Regex.Match(quantity.ToString(), "[0-9,.]*").Value;
                     split[1] = quantity.ToString().Replace(split[0], "").Replace(" ", "");
 
                     if (double.TryParse(split[0], out double parsed))
                     {
                         food.unit = split[1];
-                        food.amount = parsed;
+                        food.single_amount = parsed;
                     }
                 }
                 else
