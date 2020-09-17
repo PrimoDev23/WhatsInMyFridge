@@ -18,7 +18,7 @@ namespace WhatsInMyFridge.Views
     {
         public SelectedItemsPopUpViewModel viewModel = new SelectedItemsPopUpViewModel();
 
-        private TaskCompletionSource<ObservableCollection<Food>> complete;
+        private TaskCompletionSource<ValueTuple<ObservableCollection<Food>, bool>> complete;
 
         public SelectItemsPopUp()
         {
@@ -30,20 +30,25 @@ namespace WhatsInMyFridge.Views
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
-        public async Task<ObservableCollection<Food>> waitForFinish()
+        public async Task<ValueTuple<ObservableCollection<Food>, bool>> waitForFinish()
         {
-            complete = new TaskCompletionSource<ObservableCollection<Food>>();
+            complete = new TaskCompletionSource<ValueTuple<ObservableCollection<Food>, bool>>();
             return await complete.Task;
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e)
         {
-            complete?.TrySetResult(null);
+            complete?.TrySetResult((null, false));
         }
 
         private void btnOK_Clicked(object sender, EventArgs e)
         {
-            complete?.TrySetResult(new ObservableCollection<Food>(viewModel.SelectedIngredients.Cast<Food>().ToList()));
+            complete?.TrySetResult((new ObservableCollection<Food>(viewModel.SelectedIngredients.Cast<Food>().ToList()), false));
+        }
+
+        private void btnLoadRecipe_Clicked(object sender, EventArgs e)
+        {
+            complete?.TrySetResult((new ObservableCollection<Food>(viewModel.SelectedIngredients.Cast<Food>().ToList()), true));
         }
 
         private void selected(Food food)

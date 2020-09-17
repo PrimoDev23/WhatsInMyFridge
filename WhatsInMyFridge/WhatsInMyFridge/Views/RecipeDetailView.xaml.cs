@@ -23,6 +23,8 @@ namespace WhatsInMyFridge.Views
 
             mainCollection.HeightRequest = (viewModel.mainRecipe.mainIngredients.Count * 30) + (viewModel.mainRecipe.mainIngredients.Count * 2 * 5);
 
+            viewModel.gridHeight = mainCollection.HeightRequest;
+
             this.BindingContext = viewModel;
         }
     }

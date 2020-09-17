@@ -71,11 +71,6 @@
                                                 Text="{Binding combinedAmountName}"
                                                 TextColor="Black"
                                                 VerticalTextAlignment="Center" />
-                                            <Image
-                                                Grid.Column="3"
-                                                HeightRequest="30"
-                                                HorizontalOptions="End"
-                                                Source="{Binding nutrition_img_source}" />
                                             <Path
                                                 Grid.Row="0"
                                                 Margin="-2"
@@ -93,7 +88,8 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                    <Button
+                    <StackLayout Orientation="Horizontal">
+                        <Button
                         x:Name="btnCancel"
                         BackgroundColor="Transparent"
                         Clicked="btnCancel_Clicked"
@@ -101,7 +97,7 @@
                         Text="Abbrechen"
                         TextColor="Black"
                         Visual="Default" />
-                    <Button
+                        <Button
                         x:Name="btnOK"
                         BackgroundColor="Transparent"
                         Clicked="btnOK_Clicked"
@@ -109,6 +105,17 @@
                         Text="OK"
                         TextColor="Black"
                         Visual="Default" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Button
+                        x:Name="btnLoadRecipe"
+                        BackgroundColor="Transparent"
+                        Clicked="btnLoadRecipe_Clicked"
+                        HorizontalOptions="End"
+                        Text="Rezepte laden"
+                        TextColor="Black"
+                        Visual="Default" />
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </Frame>

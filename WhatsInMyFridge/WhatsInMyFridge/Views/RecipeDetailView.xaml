@@ -42,7 +42,7 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="30" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="{Binding gridHeight}" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>

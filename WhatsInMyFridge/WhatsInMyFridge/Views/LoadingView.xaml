@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="WhatsInMyFridge.Views.LoadingView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentView.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <BoxView
+                Grid.Row="0"
+                Grid.Column="0"
+                BackgroundColor="DarkGray"
+                Opacity="0.8" />
+
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="Center"
+                Orientation="Vertical"
+                VerticalOptions="Center">
+                <ActivityIndicator
+                    HeightRequest="40"
+                    IsRunning="True"
+                    WidthRequest="40" />
+
+                <Label
+                    HorizontalOptions="Center"
+                    Text="Lade Rezepte..."
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+            </StackLayout>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>
