@@ -47,13 +47,16 @@ namespace WhatsInMyFridge.Models
             set
             {
                 _imageUrl = value;
-                if (addingType == AddingType.Scanned)
+                if(value != null)
                 {
-                    main_img = ImageSource.FromUri(new Uri(value));
-                }
-                else
-                {
-                    main_img = ImageSource.FromFile(value);
+                    if (addingType == AddingType.Scanned)
+                    {
+                        main_img = ImageSource.FromUri(new Uri(value));
+                    }
+                    else
+                    {
+                        main_img = ImageSource.FromFile(value);
+                    }
                 }
             }
         }

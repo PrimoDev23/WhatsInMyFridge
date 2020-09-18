@@ -15,7 +15,12 @@ namespace WhatsInMyFridge.Models
     {
         public string IngredientPlaceholder
         {
-            get { return $"{mainIngredients.CountInFridge().ToString()}/{mainIngredients.Count.ToString()}"; }
+            get { return $"{IngredientsInFridge.ToString()}/{mainIngredients.Count.ToString()}"; }
+        }
+
+        public int IngredientsInFridge
+        {
+            get { return mainIngredients.CountInFridge(); }
         }
 
         public string CookingTimePlaceholder
@@ -36,7 +41,7 @@ namespace WhatsInMyFridge.Models
                     string retVal = string.Empty;
                     for(int i = 0; i < instructions.Count; i++)
                     {
-                        retVal += instructions[i] + "\n";
+                        retVal += instructions[i] + "\n\n";
                     }
                     return retVal;
                 }

@@ -51,6 +51,7 @@ namespace WhatsInMyFridge.Helper
             }
 
             string foodNames = string.Empty;
+
             //Zutatenliste erstellen
             for (int i = 0; i < ingredients.Count; i++)
             {
@@ -59,7 +60,7 @@ namespace WhatsInMyFridge.Helper
 
             foodNames = foodNames.TrimEnd(',');
 
-            string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/t=10/i={foodNames}";
+            string url = $"https://whatsinmyfridge123.herokuapp.com/searchRecipes/t=6/i={foodNames}";
 
             string json;
 
@@ -118,7 +119,14 @@ namespace WhatsInMyFridge.Helper
                 if(front_image == null)
                 {
                     //try alternative image
-                    front_image = products["selected_images"]["front"]["display"]["de"];
+                    try
+                    {
+                        front_image = products["selected_images"]["front"]["display"]["de"];
+                    }
+                    catch
+                    {
+
+                    }
                 }
 
                 Food food = new Food()

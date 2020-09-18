@@ -33,26 +33,42 @@ namespace WhatsInMyFridge.Views
             {
                 viewModel.foodList = VarContainer.fridgePage.viewModel.foodList;
 
+
+                //Aktuellen Kühlschrankinhalt übergeben
                 selectItemsPopUp.viewModel.CurrentIngredients = viewModel.foodList;
                 selectItemsPopUp.IsVisible = true;
 
-                ObservableCollection<Food> selectedFood = await selectItemsPopUp.waitForFinish();
+                ValueTuple<ObservableCollection<Food>, bool> selectedFood = await selectItemsPopUp.waitForFinish();
 
-                if (selectedFood != null)
+                if (selectedFood.Item1 != null)
                 {
+<<<<<<< HEAD
                     //API Rezepe abrufen zu den ausgewählten Zutaten
                     viewModel.SelectedFood = selectedFood;
                     RecipeModel[] avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood);
+=======
+                    viewModel.SelectedFood = selectedFood.Item1;
+>>>>>>> 344ca054ce08d81e62afd0f07f0529028ec93df2
 
-                    if(avaiableRecipes != null)
+                    //Nur API Aufruf ausführen, falls der Nutzer "Rezepte laden" gewählt hat
+                    if(selectedFood.Item2 == true)
                     {
-                        viewModel.RecipeList = new ObservableCollection<RecipeModel>(avaiableRecipes);
-                        viewModel.FilteredRecipeList = viewModel.RecipeList;
+                        loadingView.IsVisible = true;
+
+                        //API Rezepe abrufen zu den ausgewählten Zutaten
+                        List<RecipeModel> avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood.Item1);
+                        loadingView.IsVisible = false;
+                        if (avaiableRecipes != null)
+                        {
+                            viewModel.RecipeList = new ObservableCollection<RecipeModel>(avaiableRecipes.OrderByDescending(y => y.IngredientsInFridge));
+                            viewModel.FilteredRecipeList = viewModel.RecipeList;
+                        }
+                        else
+                        {
+                            await DisplayAlert("Achtung", "Zu den gewählten Zutaten wurde kein Rezept gefunden! Wir empfehlen Lieferando.", "OK");
+                        }
                     }
-                    else
-                    {
-                        await DisplayAlert("Achtung", "Zu den gewählten Zutaten wurde kein Rezept gefunden! Wir empfehlen Lieferando.", "OK");
-                    }
+
                 }
 
                 txtSearch_TextChanged(null, null);
@@ -75,6 +91,8 @@ namespace WhatsInMyFridge.Views
                 if(newRecipe != null)
                 {
                     newRecipe.mainIngredients = viewModel.SelectedFood;
+
+                    //Bilder zurücksetzen, da der JSON Serializer damit nichts anfangen kann
                     newRecipe.mainIngredients.ForEach(y => { y.main_img = null; y.nutrition_img_source = null; });
                     bool success = await APIHelper.addRecipeRequest(newRecipe);
                     if (success)
