@@ -14,7 +14,10 @@
         <ToolbarItem IconImageSource="cooking_hat_white.png" />
     </ContentPage.ToolbarItems>
 
-    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <Grid
+        BackgroundColor="{DynamicResource colorBack}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="130" />
@@ -55,7 +58,7 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Food">
-                        <SwipeView>
+                        <SwipeView BackgroundColor="{DynamicResource colorBack}">
                             <SwipeView.LeftItems>
                                 <SwipeItems Mode="Execute">
                                     <SwipeItem
@@ -66,25 +69,29 @@
                                 </SwipeItems>
                             </SwipeView.LeftItems>
                             <Frame
-                                Padding="10"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True">
-                                <StackLayout Orientation="Horizontal">
-                                    <Image
-                                        HeightRequest="60"
-                                        Source="{Binding main_img}"
-                                        WidthRequest="60" />
-                                    <Label
-                                        Margin="5,0,0,0"
-                                        Text="{Binding combinedAmountName}"
-                                        TextColor="Black"
-                                        VerticalTextAlignment="Center" />
-                                    <Image
-                                        HorizontalOptions="EndAndExpand"
-                                        Source="{Binding nutrition_img_source}"
-                                        WidthRequest="60" />
-                                </StackLayout>
+                                Padding="1,1,2,2"
+                                BackgroundColor="{DynamicResource colorAccent}"
+                                CornerRadius="20">
+                                <Frame
+                                    Padding="10"
+                                    BackgroundColor="{DynamicResource colorLightBack}"
+                                    CornerRadius="20">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image
+                                            HeightRequest="60"
+                                            Source="{Binding main_img}"
+                                            WidthRequest="60" />
+                                        <Label
+                                            Margin="5,0,0,0"
+                                            Text="{Binding combinedAmountName}"
+                                            TextColor="{DynamicResource colorFont}"
+                                            VerticalTextAlignment="Center" />
+                                        <Image
+                                            HorizontalOptions="EndAndExpand"
+                                            Source="{Binding nutrition_img_source}"
+                                            WidthRequest="60" />
+                                    </StackLayout>
+                                </Frame>
                             </Frame>
                         </SwipeView>
                     </DataTemplate>

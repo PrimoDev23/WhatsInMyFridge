@@ -37,6 +37,7 @@ namespace WhatsInMyFridge.Views
             if (food.brand?.Length > 0)
             {
                 lblBrand.Text = food.brand;
+                lblBrand.IsVisible = true;
             }
             else
             {

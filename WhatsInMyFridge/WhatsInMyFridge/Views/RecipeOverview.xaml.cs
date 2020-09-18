@@ -42,7 +42,7 @@ namespace WhatsInMyFridge.Views
                 {
                     //API Rezepe abrufen zu den ausgewählten Zutaten
                     viewModel.SelectedFood = selectedFood;
-                    List<RecipeModel> avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood);
+                    RecipeModel[] avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood);
 
                     if(avaiableRecipes != null)
                     {

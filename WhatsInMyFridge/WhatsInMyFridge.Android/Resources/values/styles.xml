@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
 
-  <style name="MainTheme" parent="MainTheme.Base">
+  <style name="MainTheme" parent="Theme.AppCompat">
+    <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
+    <item name="windowNoTitle">true</item>
+    <!--We will be using the toolbar so no need to show ActionBar-->
+    <item name="windowActionBar">false</item>
+    <!-- You can also set colorControlNormal, colorControlActivated
+         colorControlHighlight and colorSwitchThumbNormal. -->
+    <item name="windowActionModeOverlay">true</item>
+
+    <item name="android:datePickerDialogTheme">@style/DatePickerStyleDark</item>
+    <item name="android:datePickerDialogTheme">@style/DatePickerStyleDark</item>
+
+    <item name="colorPrimary">#03a9f4</item>
+    <item name="colorPrimaryDark">#0089c7</item>
+    <item name="colorAccent">#03a9f4</item>
+  </style>
+  
+  <style name="DatePickerStyleDark" parent="Theme.AppCompat.Dialog">
+    <item name="colorAccent">#d32f2f</item>
+    <item name="android:textColorPrimary">#FFFFFF</item>
+    <item name="android:background">#424242</item>
+    <item name="android:textColorSecondary">@color/colorAccent</item>
   </style>
 </resources>

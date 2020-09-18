@@ -43,9 +43,9 @@ namespace WhatsInMyFridge.Helper
             }
         }
 
-        public static async Task<List<RecipeModel>> getRecipesFromAPI(ObservableCollection<Food> ingredients)
+        public static async Task<RecipeModel[]> getRecipesFromAPI(ObservableCollection<Food> ingredients)
         {
-            if (ingredients.Count < 1)
+            if (ingredients.Count == 0)
             {
                 return null;
             }
@@ -72,9 +72,9 @@ namespace WhatsInMyFridge.Helper
                 }
             }
 
-            List<RecipeModel> avaiableRecipes = JsonConvert.DeserializeObject<List<RecipeModel>>(json);
+            RecipeModel[] avaiableRecipes = JsonConvert.DeserializeObject<RecipeModel[]>(json);
 
-            if (avaiableRecipes.Count > 0)
+            if (avaiableRecipes.Length > 0)
             {
                 return avaiableRecipes;
             }

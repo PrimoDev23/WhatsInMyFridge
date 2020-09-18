@@ -22,6 +22,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Padding="0"
+            BackgroundColor="{DynamicResource colorBack}"
             CornerRadius="20"
             HasShadow="True">
             <StackLayout Orientation="Vertical">
@@ -43,7 +44,7 @@
                         HorizontalTextAlignment="Center"
                         Text="{Binding food.brand}" />
                 </StackLayout>
-                <Grid x:Name="stackUnit">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="AUTO" />
                         <RowDefinition Height="AUTO" />
@@ -80,7 +81,10 @@
                         Text=""
                         TextColor="Red" />
                 </Grid>
-                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                <StackLayout
+                    HeightRequest="40"
+                    HorizontalOptions="EndAndExpand"
+                    Orientation="Horizontal">
                     <Button
                         Margin="0,-20,0,0"
                         BackgroundColor="Transparent"

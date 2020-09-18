@@ -26,14 +26,12 @@ namespace WhatsInMyFridge.Views
             viewModel.selectCommand = new Command<Food>(new Action<Food>(selected));
 
             this.BindingContext = viewModel;
-
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         public async Task<ObservableCollection<Food>> waitForFinish()
         {
             complete = new TaskCompletionSource<ObservableCollection<Food>>();
-            return await complete.Task;
+            return await complete.Task.ConfigureAwait(false);
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e)

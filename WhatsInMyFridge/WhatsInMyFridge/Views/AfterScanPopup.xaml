@@ -18,6 +18,7 @@
         <Frame
             Grid.Row="1"
             Grid.Column="1"
+            BackgroundColor="{DynamicResource colorBack}"
             CornerRadius="20"
             HasShadow="True">
             <StackLayout Orientation="Vertical">
@@ -30,27 +31,29 @@
                 <Label x:Name="AmountValid" TextColor="Red" />
                 <Picker
                     x:Name="pickerUnit"
-                    Title="Mengeneinheit"
-                    SelectedIndex="0">
+                    Visual="Material"
+                    SelectedIndex="0"
+                    Title="Anzahl/Einheit verwenden">
                     <Picker.Items>
                         <x:String>Einheit benutzen</x:String>
                         <x:String>Anzahl benutzen</x:String>
                     </Picker.Items>
                 </Picker>
-                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                <StackLayout
+                    Margin="0,-5,0,0"
+                    HorizontalOptions="EndAndExpand"
+                    Orientation="Horizontal">
                     <Button
                         x:Name="btnCancel"
                         BackgroundColor="Transparent"
                         Clicked="btnCancel_Clicked"
                         Text="Abbrechen"
-                        TextColor="Black"
                         Visual="Default" />
                     <Button
                         x:Name="btnOK"
                         BackgroundColor="Transparent"
                         Clicked="btnOK_Clicked"
                         Text="OK"
-                        TextColor="Black"
                         Visual="Default" />
                 </StackLayout>
             </StackLayout>

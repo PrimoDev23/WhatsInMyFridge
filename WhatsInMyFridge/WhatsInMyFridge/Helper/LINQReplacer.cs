@@ -19,7 +19,6 @@ namespace WhatsInMyFridge.Helper
                 }
             }
             return null;
-
         }
         public static Food foodAlreadyAddedName(this ObservableCollection<Food> items, string name)
         {

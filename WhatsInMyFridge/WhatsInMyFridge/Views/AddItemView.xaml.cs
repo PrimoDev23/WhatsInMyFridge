@@ -35,7 +35,7 @@ namespace WhatsInMyFridge.Views
             txtAmount.Text = null;
             viewModel.complete = new TaskCompletionSource<bool>();
 
-            bool success = await viewModel.complete.Task;
+            bool success = await viewModel.complete.Task.ConfigureAwait(false);
 
             return success && !viewModel.found ? viewModel.food : null;
         }
@@ -89,14 +89,14 @@ namespace WhatsInMyFridge.Views
 
         private async void capture()
         {
-            await CrossMedia.Current.Initialize();
+            await CrossMedia.Current.Initialize().ConfigureAwait(false);
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
                 return;
             }
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions());
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()).ConfigureAwait(false);
 
             viewModel.food.imageUrl = file.Path;
         }

@@ -6,7 +6,29 @@
     <Application.Resources>
 
         <Color x:Key="colorAccent">#03a9f4</Color>
-        <Color x:Key="colorBlurBack">#33000000</Color>
+        <Color x:Key="colorBlurBack">#55000000</Color>
 
+        <Color x:Key="colorBack">#ff272727</Color>
+        <Color x:Key="colorLightBack">#ff404040</Color>
+        <Color x:Key="colorFont">#ffffffff</Color>
+        <Color x:Key="colorFontTransparent">#88ffffff</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{DynamicResource colorFont}"/>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="TextColor" Value="{DynamicResource colorFont}"/>
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="PlaceholderColor" Value="{DynamicResource colorFont}"/>
+            <Setter Property="TextColor" Value="{DynamicResource colorFont}"/>
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="{DynamicResource colorFont}"/>
+            <Setter Property="TitleColor" Value="{DynamicResource colorFontTransparent}"/>
+        </Style>
     </Application.Resources>
 </Application>
