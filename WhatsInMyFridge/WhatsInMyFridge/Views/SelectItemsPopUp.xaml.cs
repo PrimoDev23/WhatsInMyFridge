@@ -28,18 +28,10 @@ namespace WhatsInMyFridge.Views
             this.BindingContext = viewModel;
         }
 
-<<<<<<< HEAD
-        public async Task<ObservableCollection<Food>> waitForFinish()
-        {
-            complete = new TaskCompletionSource<ObservableCollection<Food>>();
-            return await complete.Task.ConfigureAwait(false);
-=======
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Call 'ConfigureAwait(false)'.", Justification = "<Ausstehend>")]
         public async Task<ValueTuple<ObservableCollection<Food>, bool>> waitForFinish()
         {
             complete = new TaskCompletionSource<ValueTuple<ObservableCollection<Food>, bool>>();
-            return await complete.Task;
->>>>>>> 344ca054ce08d81e62afd0f07f0529028ec93df2
+            return await complete.Task.ConfigureAwait(false);
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e)

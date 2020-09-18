@@ -33,7 +33,6 @@ namespace WhatsInMyFridge.Views
             {
                 viewModel.foodList = VarContainer.fridgePage.viewModel.foodList;
 
-
                 //Aktuellen Kühlschrankinhalt übergeben
                 selectItemsPopUp.viewModel.CurrentIngredients = viewModel.foodList;
                 selectItemsPopUp.IsVisible = true;
@@ -42,21 +41,15 @@ namespace WhatsInMyFridge.Views
 
                 if (selectedFood.Item1 != null)
                 {
-<<<<<<< HEAD
-                    //API Rezepe abrufen zu den ausgewählten Zutaten
-                    viewModel.SelectedFood = selectedFood;
-                    RecipeModel[] avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood);
-=======
                     viewModel.SelectedFood = selectedFood.Item1;
->>>>>>> 344ca054ce08d81e62afd0f07f0529028ec93df2
 
                     //Nur API Aufruf ausführen, falls der Nutzer "Rezepte laden" gewählt hat
-                    if(selectedFood.Item2 == true)
+                    if(selectedFood.Item2)
                     {
                         loadingView.IsVisible = true;
 
                         //API Rezepe abrufen zu den ausgewählten Zutaten
-                        List<RecipeModel> avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood.Item1);
+                        RecipeModel[] avaiableRecipes = await APIHelper.getRecipesFromAPI(selectedFood.Item1);
                         loadingView.IsVisible = false;
                         if (avaiableRecipes != null)
                         {
@@ -68,7 +61,6 @@ namespace WhatsInMyFridge.Views
                             await DisplayAlert("Achtung", "Zu den gewählten Zutaten wurde kein Rezept gefunden! Wir empfehlen Lieferando.", "OK");
                         }
                     }
-
                 }
 
                 txtSearch_TextChanged(null, null);
