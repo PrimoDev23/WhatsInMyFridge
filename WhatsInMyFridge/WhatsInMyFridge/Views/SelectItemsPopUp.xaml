@@ -24,6 +24,7 @@
         <Frame
             Grid.Row="1"
             Grid.Column="1"
+            BackgroundColor="{DynamicResource colorBack}"
             CornerRadius="20"
             HasShadow="True">
             <StackLayout Orientation="Vertical">
@@ -47,41 +48,44 @@
                             <DataTemplate>
                                 <controls:FridgeGrid x:DataType="models:Food" FoodItem="{Binding .}">
                                     <Frame
-                                        Margin="2"
-                                        Padding="10"
-                                        Background="White"
-                                        CornerRadius="10"
-                                        HasShadow="True">
+                                        Padding="1,1,2,2"
+                                        BackgroundColor="{StaticResource colorAccent}"
+                                        CornerRadius="20">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="{DynamicResource colorBack}"
+                                            CornerRadius="20"
+                                            HasShadow="True">
 
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20" />
-                                                <ColumnDefinition Width="60" />
-                                                <ColumnDefinition Width="AUTO" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="60" />
+                                                    <ColumnDefinition Width="AUTO" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
 
-                                            <Image
-                                                Grid.Column="1"
-                                                HeightRequest="60"
-                                                Source="{Binding main_img}" />
-                                            <Label
-                                                Grid.Column="2"
-                                                Margin="5,0,0,0"
-                                                Text="{Binding combinedAmountName}"
-                                                TextColor="Black"
-                                                VerticalTextAlignment="Center" />
-                                            <Path
-                                                Grid.Row="0"
-                                                Margin="-2"
-                                                Data="{Binding checked_path_data}"
-                                                Fill="Black"
-                                                VerticalOptions="Center" />
-                                        </Grid>
+                                                <Image
+                                                    Grid.Column="1"
+                                                    HeightRequest="60"
+                                                    Source="{Binding main_img}" />
+                                                <Label
+                                                    Grid.Column="2"
+                                                    Margin="5,0,0,0"
+                                                    Text="{Binding combinedAmountName}"
+                                                    VerticalTextAlignment="Center" />
+                                                <Path
+                                                    Grid.Row="0"
+                                                    Margin="-2"
+                                                    Data="{Binding checked_path_data}"
+                                                    Fill="White"
+                                                    VerticalOptions="Center" />
+                                            </Grid>
 
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.selectCommand, Source={x:Reference usedDialog}}" CommandParameter="{Binding .}" />
-                                        </Frame.GestureRecognizers>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.selectCommand, Source={x:Reference usedDialog}}" CommandParameter="{Binding .}" />
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
                                     </Frame>
 
                                 </controls:FridgeGrid>
@@ -90,31 +94,28 @@
                     </CollectionView>
                     <StackLayout Orientation="Horizontal">
                         <Button
-                        x:Name="btnCancel"
-                        BackgroundColor="Transparent"
-                        Clicked="btnCancel_Clicked"
-                        HorizontalOptions="End"
-                        Text="Abbrechen"
-                        TextColor="Black"
-                        Visual="Default" />
+                            x:Name="btnCancel"
+                            BackgroundColor="Transparent"
+                            Clicked="btnCancel_Clicked"
+                            HorizontalOptions="End"
+                            Text="Abbrechen"
+                            Visual="Default" />
                         <Button
-                        x:Name="btnOK"
-                        BackgroundColor="Transparent"
-                        Clicked="btnOK_Clicked"
-                        HorizontalOptions="End"
-                        Text="OK"
-                        TextColor="Black"
-                        Visual="Default" />
+                            x:Name="btnOK"
+                            BackgroundColor="Transparent"
+                            Clicked="btnOK_Clicked"
+                            HorizontalOptions="End"
+                            Text="OK"
+                            Visual="Default" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Button
-                        x:Name="btnLoadRecipe"
-                        BackgroundColor="Transparent"
-                        Clicked="btnLoadRecipe_Clicked"
-                        HorizontalOptions="End"
-                        Text="Rezepte laden"
-                        TextColor="Black"
-                        Visual="Default" />
+                            x:Name="btnLoadRecipe"
+                            BackgroundColor="Transparent"
+                            Clicked="btnLoadRecipe_Clicked"
+                            HorizontalOptions="End"
+                            Text="Rezepte laden"
+                            Visual="Default" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

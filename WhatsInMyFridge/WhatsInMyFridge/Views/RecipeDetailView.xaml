@@ -15,187 +15,110 @@
         <conv:FridgeStateToImage x:Key="FridgeStatToImage" />
     </ContentPage.Resources>
 
-    <Grid
-        Padding="4"
-        HorizontalOptions="FillAndExpand"
-        VerticalOptions="FillAndExpand">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="250" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
+    <StackLayout Orientation="Vertical">
         <Image
-            Grid.Row="0"
             Aspect="AspectFill"
+            HeightRequest="250"
             Source="{Binding mainRecipe.RecipeImageParsed}" />
-
-        <ScrollView Grid.Row="1">
-            <Frame
-                Grid.Row="1"
-                BackgroundColor="#FFE6E7E9"
-                CornerRadius="8">
-                <Grid Grid.Row="1">
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="{Binding gridHeight}" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+        <ScrollView Margin="0,-30,0,0">
+            <Frame BackgroundColor="{DynamicResource colorBack}" CornerRadius="20">
+                <StackLayout Orientation="Vertical">
 
                     <Label
-                        Grid.Row="0"
                         Margin="6,1,0,0"
-                        FontSize="25"
-                        Text="{Binding mainRecipe.recipeName}"
-                        TextColor="#FF03045e" />
+                        FontSize="Medium"
+                        Text="{Binding mainRecipe.recipeName}" />
 
-                    <Grid
-                        Grid.Row="1"
-                        Grid.RowSpan="2"
-                        Grid.Column="0"
-                        HorizontalOptions="Center">
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40" />
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="105" />
-                            <ColumnDefinition Width="70" />
-                            <ColumnDefinition Width="125" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackLayout
-                            Grid.RowSpan="2"
+                    <StackLayout
+                        Margin="10"
+                        HorizontalOptions="CenterAndExpand"
+                        Orientation="Horizontal">
+                        <Path
+                            Grid.Row="0"
                             Grid.Column="0"
-                            Orientation="Horizontal">
-                            <Path
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Data="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"
-                                Fill="#FF2a9d8f"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                            <Label
-                                FontSize="20"
-                                HorizontalOptions="Center"
-                                Text="{Binding mainRecipe.CookingTimePlaceholder}"
-                                TextColor="Black"
-                                VerticalOptions="Center" />
-                        </StackLayout>
+                            Data="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"
+                            Fill="#FF2a9d8f"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Text="{Binding mainRecipe.CookingTimePlaceholder}"
+                            VerticalOptions="Center" />
 
-                        <StackLayout
-                            Grid.RowSpan="2"
+                        <Path
+                            Grid.Row="0"
                             Grid.Column="1"
-                            Orientation="Horizontal">
+                            Data="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"
+                            Fill="#FFf8961e"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
 
-                            <Path
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Data="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"
-                                Fill="#FFf8961e"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                FontSize="20"
-                                HorizontalOptions="Center"
-                                Text="{Binding mainRecipe.IngredientPlaceholder}"
-                                TextColor="Black"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-
-                        <StackLayout
-                            Grid.RowSpan="2"
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Text="{Binding mainRecipe.IngredientPlaceholder}"
+                            VerticalOptions="Center" />
+                        <Path
+                            Grid.Row="0"
                             Grid.Column="2"
-                            Orientation="Horizontal">
-                            <Path
-                                Grid.Row="0"
-                                Grid.Column="2"
-                                Data="M19.48,12.35c-1.57-4.08-7.16-4.3-5.81-10.23c0.1-0.44-0.37-0.78-0.75-0.55C9.29,3.71,6.68,8,8.87,13.62 c0.18,0.46-0.36,0.89-0.75,0.59c-1.81-1.37-2-3.34-1.84-4.75c0.06-0.52-0.62-0.77-0.91-0.34C4.69,10.16,4,11.84,4,14.37 c0.38,5.6,5.11,7.32,6.81,7.54c2.43,0.31,5.06-0.14,6.95-1.87C19.84,18.11,20.6,15.03,19.48,12.35z M10.2,17.38 c1.44-0.35,2.18-1.39,2.38-2.31c0.33-1.43-0.96-2.83-0.09-5.09c0.33,1.87,3.27,3.04,3.27,5.08C15.84,17.59,13.1,19.76,10.2,17.38z"
-                                Fill="#FFdc2f02"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
+                            Data="M19.48,12.35c-1.57-4.08-7.16-4.3-5.81-10.23c0.1-0.44-0.37-0.78-0.75-0.55C9.29,3.71,6.68,8,8.87,13.62 c0.18,0.46-0.36,0.89-0.75,0.59c-1.81-1.37-2-3.34-1.84-4.75c0.06-0.52-0.62-0.77-0.91-0.34C4.69,10.16,4,11.84,4,14.37 c0.38,5.6,5.11,7.32,6.81,7.54c2.43,0.31,5.06-0.14,6.95-1.87C19.84,18.11,20.6,15.03,19.48,12.35z M10.2,17.38 c1.44-0.35,2.18-1.39,2.38-2.31c0.33-1.43-0.96-2.83-0.09-5.09c0.33,1.87,3.27,3.04,3.27,5.08C15.84,17.59,13.1,19.76,10.2,17.38z"
+                            Fill="#FFdc2f02"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
 
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="2"
-                                FontSize="20"
-                                HorizontalOptions="Center"
-                                Text="{Binding mainRecipe.KilocaloriesPlaceholder}"
-                                TextColor="Black"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-
-                    </Grid>
-
-                    <Label
-                        Grid.Row="3"
-                        FontAttributes="Bold"
-                        Text="Zutaten"
-                        TextColor="#FF023e8a" />
-
-                    <StackLayout Grid.Row="4">
-                        <CollectionView
-                            x:Name="mainCollection"
-                            Grid.Row="4"
-                            x:DataType="vm:RecipeDetailViewModel"
-                            ItemSizingStrategy="MeasureAllItems"
-                            ItemsSource="{Binding mainRecipe.mainIngredients}"
-                            SelectionMode="None">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <controls:FridgeGrid
-                                        Margin="4"
-                                        x:DataType="models:Food"
-                                        FoodItem="{Binding .}">
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Path
-                                            Grid.Column="0"
-                                            Data="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                                            Fill="{Binding isInFridge, Converter={StaticResource FridgeStatToImage}}" />
-
-                                        <Label
-                                            Grid.Column="1"
-                                            Text="{Binding combinedAmountName}"
-                                            TextColor="Black" />
-
-                                    </controls:FridgeGrid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Text="{Binding mainRecipe.KilocaloriesPlaceholder}"
+                            VerticalOptions="Center" />
                     </StackLayout>
 
                     <Label
-                        Grid.Row="5"
                         FontAttributes="Bold"
-                        Text="Schritte"
-                        TextColor="#FF023e8a" />
+                        FontSize="Medium"
+                        Text="Zutaten" />
+
+                    <CollectionView
+                        x:Name="mainCollection"
+                        x:DataType="vm:RecipeDetailViewModel"
+                        ItemSizingStrategy="MeasureAllItems"
+                        ItemsSource="{Binding mainRecipe.mainIngredients}"
+                        SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout x:DataType="models:Food" Orientation="Horizontal">
+                                    <Path
+                                        Data="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                                        Fill="{Binding isInFridge, Converter={StaticResource FridgeStatToImage}}"
+                                        VerticalOptions="CenterAndExpand" />
+                                    <Label Text="{Binding combinedAmountName}" VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
                     <Label
-                        Grid.Row="6"
-                        BackgroundColor="#FFE6E7E9"
-                        FontSize="20"
-                        Text="{Binding mainRecipe.InstructionsPlaceholder}"
-                        TextColor="Black" />
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="Schritte" />
 
-                </Grid>
+                    <Label
+                        BackgroundColor="{DynamicResource colorBack}"
+                        FontSize="20"
+                        Text="{Binding mainRecipe.InstructionsPlaceholder}" />
+
+                </StackLayout>
             </Frame>
         </ScrollView>
 
 
-    </Grid>
+    </StackLayout>
 </ContentPage>
